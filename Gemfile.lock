@@ -76,7 +76,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
-    minitest (5.10.2)
+    minitest (5.10.1)
     multi_json (1.12.1)
     nio4r (2.0.0)
     nokogiri (1.7.2)
@@ -161,6 +161,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
   jquery-rails
+  minitest (= 5.10.1)
   rails (= 5.0.2)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
