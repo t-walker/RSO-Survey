@@ -32,6 +32,9 @@ gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Pinning minitest at this version because of a bug in Rails that causes Travis to fail.
+gem "minitest", "5.10.1"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
