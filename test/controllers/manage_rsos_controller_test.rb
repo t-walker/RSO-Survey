@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class LandingPageControllerTest < ActionDispatch::IntegrationTest
+class ManageRsosControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get landing_page_url
+    get manage_rsos_url
     assert_response :success
   end
 

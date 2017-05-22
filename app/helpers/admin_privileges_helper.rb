@@ -1,0 +1,2 @@
+module AdminPrivilegesHelper
+end

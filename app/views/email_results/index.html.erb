@@ -1,0 +1,10 @@
+<h1>Email Survey Results</h1>
+<%= form_for :response do |f| %>
+  <p>
+    <%= f.label "Enter your email to have your survey results emailed to you" %><br>
+    <%= f.text_field :email %><br>
+  </p>
+  <p>
+    <%= f.submit "Send results!" %>
+  </p>
+<% end %>
