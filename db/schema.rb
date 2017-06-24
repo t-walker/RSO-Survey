@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   create_table "answers_keywords", id: false, force: :cascade do |t|
     t.integer "answer_id",  null: false
     t.integer "keyword_id", null: false
+    t.index ["answer_id", "keyword_id"], name: "index_answers_keywords_on_answer_id_and_keyword_id"
   end
 
   create_table "keywords", force: :cascade do |t|
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   create_table "officers_rsos", id: false, force: :cascade do |t|
     t.integer "officer_id", null: false
     t.integer "rso_id",     null: false
+    t.index ["officer_id", "rso_id"], name: "index_officers_rsos_on_officer_id_and_rso_id"
   end
 
   create_table "questions", force: :cascade do |t|
