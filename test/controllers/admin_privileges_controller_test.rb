@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class AdminPrivilegesControllerTest < ActionDispatch::IntegrationTest
+class AdminControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get admin_privileges_url
+    get admin_url
     assert_response :success
   end
 
