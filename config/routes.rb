@@ -3,15 +3,14 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  get 'manage_rsos', to: 'manage_rsos#index'
+  get '/rso', to: 'rso#index'
+  get '/rso/manage', to: 'rso#manage'
 
-  get 'email_results', to: 'email_results#index'
-
-  get 'manage_survey', to: 'manage_survey#index'
-
-  get 'admin', to: 'admin#index'
+  get '/admin', to: 'admin#index'
+  get '/admin/manage', to: 'admin#manage'
 
   get '/survey', to: 'survey#index'
+  get '/survey/manage', to: 'survey#manage'
 
   root 'home#index'
 
