@@ -6,4 +6,8 @@ class AdminControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get manage" do
+    get admin_manage_url
+    assert_response :success
+  end
 end
