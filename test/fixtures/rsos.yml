@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  shortName: MyString
-  category: MyString
+  nickname: MyString
 
 two:
   name: MyString
-  shortName: MyString
-  category: MyString
+  nickname: MyString

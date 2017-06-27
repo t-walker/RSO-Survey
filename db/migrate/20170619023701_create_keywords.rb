@@ -1,7 +1,8 @@
 class CreateKeywords < ActiveRecord::Migration[5.0]
   def change
     create_table :keywords do |t|
-      t.string :word
+      t.string :keyword
+      t.integer :weight
 
       t.timestamps
     end
