@@ -9,8 +9,10 @@ Rails.application.routes.draw do
 
   get 'manage_survey', to: 'manage_survey#index'
 
-  get 'admin_privileges', to: 'admin_privileges#index'
+  get 'admin', to: 'admin#index'
+
+  get '/survey', to: 'survey#index'
 
   root 'home#index'
-  get '/survey', to: 'survey#index'
+
 end
