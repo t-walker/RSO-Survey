@@ -13,8 +13,7 @@
 ActiveRecord::Schema.define(version: 20170619030512) do
 
   create_table "answers", force: :cascade do |t|
-    t.string   "title"
-    t.string   "icon"
+    t.string   "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -26,7 +25,8 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   end
 
   create_table "keywords", force: :cascade do |t|
-    t.string   "word"
+    t.string   "keyword"
+    t.integer  "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,16 +53,14 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title"
-    t.string   "backgroundImage"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rsos", force: :cascade do |t|
     t.string   "name"
-    t.string   "shortName"
-    t.string   "category"
+    t.string   "nickname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
