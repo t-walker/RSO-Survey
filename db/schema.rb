@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   end
 
   create_table "officers", force: :cascade do |t|
-    t.string   "firstName"
-    t.string   "lastName"
+    t.string   "first"
+    t.string   "last"
     t.string   "email"
     t.string   "phone"
     t.datetime "created_at", null: false
