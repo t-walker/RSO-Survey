@@ -3,5 +3,6 @@ class RsoController < ApplicationController
   end
 
   def manage
+    @rsos = Rso.all
   end
 end
