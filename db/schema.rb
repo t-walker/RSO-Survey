@@ -13,8 +13,7 @@
 ActiveRecord::Schema.define(version: 20170619030512) do
 
   create_table "answers", force: :cascade do |t|
-    t.string   "title"
-    t.string   "icon"
+    t.string   "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -22,10 +21,12 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   create_table "answers_keywords", id: false, force: :cascade do |t|
     t.integer "answer_id",  null: false
     t.integer "keyword_id", null: false
+    t.index ["answer_id", "keyword_id"], name: "index_answers_keywords_on_answer_id_and_keyword_id"
   end
 
   create_table "keywords", force: :cascade do |t|
-    t.string   "word"
+    t.string   "keyword"
+    t.integer  "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   end
 
   create_table "officers", force: :cascade do |t|
-    t.string   "firstName"
-    t.string   "lastName"
+    t.string   "first"
+    t.string   "last"
     t.string   "email"
     t.string   "phone"
     t.datetime "created_at", null: false
@@ -48,19 +49,18 @@ ActiveRecord::Schema.define(version: 20170619030512) do
   create_table "officers_rsos", id: false, force: :cascade do |t|
     t.integer "officer_id", null: false
     t.integer "rso_id",     null: false
+    t.index ["officer_id", "rso_id"], name: "index_officers_rsos_on_officer_id_and_rso_id"
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title"
-    t.string   "backgroundImage"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rsos", force: :cascade do |t|
     t.string   "name"
-    t.string   "shortName"
-    t.string   "category"
+    t.string   "nickname"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
