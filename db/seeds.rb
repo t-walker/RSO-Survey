@@ -37,6 +37,7 @@ Keyword.create!(word: 'crafty')
 
 Keyword.create!(word: 'outdoorsy')
 
+
 Keyword.create!(word: 'nerdyAF')
 
 Officer.create([
