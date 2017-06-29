@@ -31,14 +31,13 @@ Question.create([
   {id: 16, question: 'Rock climb or play music?'},
   {id: 17, question: 'Study rocks or learn to shoot a bow?'},
   {id: 18, question: 'Produce music or discuss current events?'},
-  {id: 19, question: 'Try a new food or watch a new movie?'},
+  {id: 19, question: 'Try a new food or watch a new movie?'}
   #{id: 20, question: ''},
   #{id: 21, question: ''},
   #{id: 22, question: ''},
   #{id: 23, question: ''},
   #{id: 24, question: ''},
   #{id: 25, question: ''}
-  
 ])
 
 Answer.create([
