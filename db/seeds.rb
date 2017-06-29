@@ -5,12 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
 Answer.destroy_all
 Keyword.destroy_all
 Officer.destroy_all
 Question.destroy_all
 Rso.destroy_all
+
 
 Question.create([
   {id: 1, question: 'Play a board game or go biking?'},
@@ -111,6 +111,7 @@ Officer.create([
   ])
 
 Rso.create([
+
   {id: 1, name: 'Association of Computer Machinery', nickname: 'ACM', officer_ids: [1, 2]},
   {id: 2, name: 'Linux Users Group', nickname: 'LUG', officer_ids: [1, 2, 3]},
   {id: 3, name: 'Knitting Club', nickname: 'KNIT', officer_ids: [2]},
