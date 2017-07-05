@@ -1,7 +1,8 @@
 class SurveyController < ApplicationController
   def index
-    @questions = Question.all
+    @questionList = Question.all
     #@questions = [{:title => "How large is your hometown?", :answers => ["big", "small", "medium"]}, {:title => "How large is your hometown?", :answers => ["big", "small", "medium"]}]
-    puts @questions.size
+
+    puts @questionList
   end
 end
