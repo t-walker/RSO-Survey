@@ -1,7 +1,7 @@
 <h1>The Survey</h1>
 
 <% @questionList.each_with_index do |q, qestindex| %>
-  <%= render partial: 'question', :locals => {:questionTitle => q.title, :qindex => qestindex} %>
+  <%= render partial: 'question', :locals => {:questionTitle => q.question, :qindex => qestindex} %>
 <% end %>
 
 <a href="/">Back to the homepage</a>
