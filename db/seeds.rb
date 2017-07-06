@@ -41,12 +41,12 @@ Question.create([
 ])
 
 Answer.create([
-  {id: 1, answer: 'Yahtzee!'},
-  {id: 2, answer: 'Painting!'},
-  {id: 3, answer: 'Gaming!'},
-  {id: 4, answer: 'Write code!'},
-  {id: 5, answer: 'Biking!'},
-  {id: 6, answer: 'Knitting!'},
+  {id: 1, answer: 'Yahtzee!', question_id: 1},
+  {id: 2, answer: 'Painting!', question_id: 2},
+  {id: 3, answer: 'Gaming!', question_id: 2},
+  {id: 4, answer: 'Write code!', question_id: 3},
+  {id: 5, answer: 'Biking!', question_id: 1},
+  {id: 6, answer: 'Knitting!', question_id: 2},
   {id: 7, answer: 'Naked Biking for Awareness!'},
   {id: 8, answer: 'Write a novel!'},
   {id: 9, answer: 'Dancing!'},
