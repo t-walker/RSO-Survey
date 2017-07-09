@@ -3,5 +3,4 @@
 <% @questionList.each do |q| %>
   <%= render partial: 'question', :locals => {:qid => q.id, :questionTitle => q.question, :answers => q.answers} %>
 <% end %>
-
 <a href="/">Back to the homepage</a>

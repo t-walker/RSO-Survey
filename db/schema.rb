@@ -58,7 +58,6 @@ ActiveRecord::Schema.define(version: 20170709205507) do
     t.string   "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "order"
   end
 
   create_table "rsos", force: :cascade do |t|
