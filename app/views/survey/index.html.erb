@@ -1,6 +1,6 @@
 <h1>The Survey</h1>
 
-<% @questionList.each do |q| %>
+<% @questions.each do |q| %>
   <%= render partial: 'question', :locals => {:qid => q.id, :questionTitle => q.question, :answers => q.answers} %>
 <% end %>
 <a href="/">Back to the homepage</a>
