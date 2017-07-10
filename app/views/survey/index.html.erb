@@ -1,12 +1,6 @@
 <h1>The Survey</h1>
-<%= form_for :response do |f| %>
-  <p>
-    <%= f.label "Question 1" %><br>
-    <%= f.label "What is your favorite color?" %><br>
-    <%= f.text_field :response1 %><br>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
+
+<% @questions.each do |q| %>
+  <%= render partial: 'question', :locals => {:qid => q.id, :questionTitle => q.question, :answers => q.answers} %>
 <% end %>
 <a href="/">Back to the homepage</a>
