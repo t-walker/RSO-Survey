@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170709224700) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "order"
+    t.index ["order"], name: "index_questions_on_order", unique: true
   end
 
   create_table "rsos", force: :cascade do |t|
