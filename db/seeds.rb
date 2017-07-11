@@ -11,106 +11,53 @@ Officer.destroy_all
 Question.destroy_all
 Rso.destroy_all
 
-
-Question.create([
-  {id: 1, question: 'Play a board game or go biking?', order: 1},
-  {id: 2, question: 'Painting or gaming?', order: 2},
-  {id: 3, question: 'Knit something or write an algorithm?', order: 3},
-  {id: 4, question: 'Go out or stay in?', order: 4},
-  {id: 5, question: 'Nude bike ride to raise awareness or write a novel?', order: 5},
-  {id: 6, question: 'Dancing or walking on the beach?', order: 6},
-  {id: 7, question: 'Watching a movie or making your own?', order: 7},
-  {id: 8, question: 'Learn martial arts or how to quilt?', order: 8},
-  {id: 9, question: 'Discuss religion or politics?', order: 9},
-  {id: 10, question: 'Learn another language or work in a laboratory?', order: 10},
-  {id: 11, question: 'Design and create a robot or bake a cake?', order: 11},
-  {id: 12, question: 'Play a board game or go target shooting?', order: 12},
-  {id: 13, question: 'Raise awareness about the environment or have a debate?', order: 13},
-  {id: 14, question: 'Tend a garden or play an online game?', order: 14},
-  {id: 15, question: 'Theorize about physics or have a nerf war?', order: 15},
-  {id: 16, question: 'Rock climb or play music?', order: 16},
-  {id: 17, question: 'Study rocks or learn to shoot a bow?', order: 17},
-  {id: 18, question: 'Produce music or discuss current events?', order: 18},
-  {id: 19, question: 'Try a new food or watch a new movie?', order: 19}
-  #{id: 20, question: ''},
-  #{id: 21, question: ''},
-  #{id: 22, question: ''},
-  #{id: 23, question: ''},
-  #{id: 24, question: ''},
-  #{id: 25, question: ''}
-])
-
 Answer.create([
-  {id: 1, answer: 'Yahtzee!'},
-  {id: 2, answer: 'Painting!'},
-  {id: 3, answer: 'Gaming!'},
-  {id: 4, answer: 'Write code!'},
-  {id: 5, answer: 'Biking!'},
-  {id: 6, answer: 'Knitting!'},
-  {id: 7, answer: 'Naked Biking for Awareness!'},
-  {id: 8, answer: 'Write a novel!'},
-  {id: 9, answer: 'Dancing!'},
-  {id: 10, answer: 'Walk on the beach!'},
-  {id: 11, answer: 'Watch a movie!'},
-  {id: 12, answer: 'Make my own!'},
-  {id: 13, answer: 'Martial Arts!'},
-  {id: 14, answer: 'Quilting!'},
-  {id: 15, answer: 'Religion!'},
-  {id: 16, answer: 'Politics!'},
-  {id: 17, answer: 'Learn another language!'},
-  {id: 18, answer: 'Work in a lab!'},
-  {id: 19, answer: 'Make a robot!'},
-  {id: 20, answer: 'Bake a cake!'},
-  {id: 21, answer: 'Board game!'},
-  {id: 22, answer: 'Shooting!'},
-  {id: 23, answer: 'Raise environmental awareness!'},
-  {id: 24, answer: 'Debate!'},
-  {id: 25, answer: 'Theorize about physics!'},
-  {id: 26, answer: 'Tend a garden!'},
-  {id: 27, answer: 'Online game!'},
-  {id: 28, answer: 'Nerf war!'},
-  {id: 29, answer: 'Rock climb!'},
-  {id: 30, answer: 'Play music!'},
-  {id: 31, answer: 'Study rocks!'},
-  {id: 32, answer: 'Shoot a bow!'},
-  {id: 33, answer: 'Produce a fat beat!'},
-  {id: 34, answer: 'Discuss current events!'},
-  {id: 35, answer: 'Try new food!'},
-  {id: 36, answer: 'Watch a new movie!'}
+  {id: 1, answer: 'Board Game'},
+  {id: 2, answer: 'Go Biking'},
+  {id: 3, answer: 'Painting'},
+  {id: 4, answer: 'Gaming'},
+  {id: 5, answer: 'Knit Something'},
+  {id: 6, answer: 'Write an Algorithm'},
+  {id: 7, answer: 'Go Out'},
+  {id: 8, answer: 'Stay In'},
+  {id: 9, answer: 'Charity Bike Race'},
+  {id: 10, answer: 'Write Novel'},
+  {id: 11, answer: 'Dancing'},
+  {id: 12, answer: 'Walking on the Beach'},
 ])
 
 Keyword.create([
-  {id: 1, keyword: 'Crafty', weight: 6},
-  {id: 2, keyword: 'Outdoorsy', weight: 8},
-  {id: 3, keyword: 'NerdyAF', weight: 8},
-  {id: 4, keyword: 'Progressive/activist', weight: 10},
-  {id: 5, keyword: 'Fit', weight: 5},
-  {id: 6, keyword: 'Thrilling', weight: 9},
-  {id: 7, keyword: 'Adventurous', weight: 8},
-  {id: 8, keyword: 'LGBTQ', weight: 7},
-  {id: 9, keyword: 'Food', weight: 5},
-  {id: 10, keyword: 'Martial Arts', weight: 8},
-  {id: 11, keyword: 'Arts', weight: 5},
-  {id: 12, keyword: 'Science', weight: 7},
-  {id: 13, keyword: 'Engineering', weight: 7},
-  {id: 14, keyword: 'Crime', weight: 6},
-  {id: 15, keyword: 'Film', weight: 4},
-  {id: 16, keyword: 'Photography', weight: 4},
-  {id: 17, keyword: 'Shooting', weight: 8},
-  {id: 18, keyword: 'Multi Cultural', weight: 4},
-  {id: 19, keyword: 'Religious', weight: 9},
-  {id: 20, keyword: 'Dance', weight: 5},
-  {id: 21, keyword: 'Programming', weight: 8}
-  ])
+  {id: 1, answer_id: 1, keyword: 'Gaming', weight: 6},
+  {id: 2, answer_id: 2, keyword: 'Physical', weight: 6},
+  {id: 3, answer_id: 3, keyword: 'Artistic', weight: 6},
+  {id: 4, answer_id: 4, keyword: 'Gaming', weight: 3},
+  {id: 5, answer_id: 5, keyword: 'Artistic', weight: 6},
+  {id: 6, answer_id: 6, keyword: 'Science', weight: 6},
+  {id: 7, answer_id: 7, keyword: 'Social', weight: 6},
+  {id: 8, answer_id: 8, keyword: 'Introverted', weight: 6},
+  {id: 9, answer_id: 9, keyword: 'Charity', weight: 6},
+  {id: 10, answer_id: 10, keyword: 'Creative', weight: 6},
+  {id: 11, answer_id: 11, keyword: 'Active', weight: 6},
+  {id: 12, answer_id: 12, keyword: 'Active', weight: 6},
+
+])
+
+Question.create([
+  {id: 1,  order: 1, question: 'Play a board game or go biking?', answer_ids: [1, 2]},
+  {id: 2,  order: 2, question: 'Painting or gaming?', answer_ids: [3, 4]},
+  {id: 3,  order: 3, question: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
+  {id: 4,  order: 4, question: 'Go out or stay in?', answer_ids: [7, 8] },
+  {id: 5,  order: 5, question: 'Charity bike race or write novel?', answer_ids: [9, 10]},
+  {id: 6,  order: 6, question: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
+])
 
 Officer.create([
   {id: 1, first: 'Nick', last: 'Vasicek', phone: '555-555-5555', email: 'nick@email.com'},
   {id: 2, first: 'Charlie', last: 'Hanacek', phone: '555-555-5555', email: 'charlie@email.com'},
   {id: 3, first: 'Tyler', last: 'Walker', phone: '555-555-5555', email: 'tyler@email.com'}
-  ])
+])
 
 Rso.create([
-
   {id: 1, name: 'Association of Computer Machinery', nickname: 'ACM', officer_ids: [1, 2]},
   {id: 2, name: 'Linux Users Group', nickname: 'LUG', officer_ids: [1, 2, 3]},
   {id: 3, name: 'Knitting Club', nickname: 'KNIT', officer_ids: [2]},
@@ -138,4 +85,4 @@ Rso.create([
   {id: 25, name: 'Cougs in Space', nickname: 'CiS', officer_ids: [2]},
   {id: 26, name: 'Esports and Gaming', nickname: 'EGWSU', officer_ids: [1, 2, 3]},
   {id: 27, name: 'Political Science Club', nickname: 'PSCWSU', officer_ids: [1, 2, 3]}
-  ])
+])

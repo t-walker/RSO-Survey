@@ -20,15 +20,10 @@ ActiveRecord::Schema.define(version: 20170709224700) do
     t.integer  "order"
   end
 
-  create_table "answers_keywords", id: false, force: :cascade do |t|
-    t.integer "answer_id",  null: false
-    t.integer "keyword_id", null: false
-    t.index ["answer_id", "keyword_id"], name: "index_answers_keywords_on_answer_id_and_keyword_id"
-  end
-
   create_table "keywords", force: :cascade do |t|
     t.string   "keyword"
     t.integer  "weight"
+    t.integer  "answer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -59,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170709224700) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "order"
+    t.index ["order"], name: "index_questions_on_order", unique: true
   end
 
   create_table "rsos", force: :cascade do |t|
