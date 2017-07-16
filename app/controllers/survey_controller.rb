@@ -2,11 +2,15 @@ class SurveyController < ApplicationController
   def index
     @questions = Question.order(:order)
   end
+  
   def createQuestion
     @question = Question.create(question: params[:question])
-    @question.order = @question.id
+    @question.order = @question.id # Did this because it is currently the convention in our seed data.
     @question.save!
     nextOrder = 0
+
+    # These if statments prevent empty answers from being created if the user wants
+    # less than 4 answers to a question.
     if(params[:answer1] != "")
       nextOrder += 1
       @question.answers.create(answer: params[:answer1], order: nextOrder)
