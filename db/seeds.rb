@@ -43,12 +43,12 @@ Keyword.create([
 ])
 
 Question.create([
-  {id: 1,  order: 1, question: 'Play a board game or go biking?', answer_ids: [1, 2]},
-  {id: 2,  order: 2, question: 'Painting or gaming?', answer_ids: [3, 4]},
-  {id: 3,  order: 3, question: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
-  {id: 4,  order: 4, question: 'Go out or stay in?', answer_ids: [7, 8] },
-  {id: 5,  order: 5, question: 'Charity bike race or write novel?', answer_ids: [9, 10]},
-  {id: 6,  order: 6, question: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
+  {id: 1,  position: 1, question: 'Play a board game or go biking?', answer_ids: [1, 2]},
+  {id: 2,  position: 2, question: 'Painting or gaming?', answer_ids: [3, 4]},
+  {id: 3,  position: 3, question: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
+  {id: 4,  position: 4, question: 'Go out or stay in?', answer_ids: [7, 8] },
+  {id: 5,  position: 5, question: 'Charity bike race or write novel?', answer_ids: [9, 10]},
+  {id: 6,  position: 6, question: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
 ])
 
 Officer.create([

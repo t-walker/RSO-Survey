@@ -10,14 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709224700) do
+ActiveRecord::Schema.define(version: 20170716030412) do
 
   create_table "answers", force: :cascade do |t|
     t.string   "answer"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "question_id"
-    t.integer  "order"
+    t.integer  "position"
+  end
+
+  create_table "answers_keywords", id: false, force: :cascade do |t|
+    t.integer "answer_id",  null: false
+    t.integer "keyword_id", null: false
+    t.index ["answer_id", "keyword_id"], name: "index_answers_keywords_on_answer_id_and_keyword_id"
   end
 
   create_table "keywords", force: :cascade do |t|
@@ -53,8 +59,8 @@ ActiveRecord::Schema.define(version: 20170709224700) do
     t.string   "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "order"
-    t.index ["order"], name: "index_questions_on_order", unique: true
+    t.integer  "position"
+    t.index ["position"], name: "index_questions_on_position", unique: true
   end
 
   create_table "rsos", force: :cascade do |t|

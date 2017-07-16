@@ -18,5 +18,17 @@
   <label for="answer4">Answer 4:</label>
   <input type="text" name="answer4" />
   <br/>
+  <p>Where should this question appear in the survey?
+  Currently there are <%= @questionNum %> questions in the survey. The position
+  you specify will determine the position of the question within the survey.
+  For example, if you were to enter "3", this new question would appear as
+  the third question in the survey. Specifying a number greater than the
+  current number of questions in the survey (<%= @questionNum %>) will put it
+  at the end of the survey. If this field is left blank, the question will be
+  inserted at the end of the survey.</p>
+  <label for="position">Position:</label>
+  <input type="number" name="position" />
+  <br />
+
   <button type="button" id="submitNewQuestion" onclick="submitQuestion()">Submit</button>
 </form>
