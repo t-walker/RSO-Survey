@@ -45,4 +45,8 @@ class SurveyController < ApplicationController
   def manage
     @questionNum = Question.count(:question_title)
   end
+
+
+  def submit_survey
+  end
 end
