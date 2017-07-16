@@ -3,7 +3,7 @@ class SurveyController < ApplicationController
     @questions = Question.order(:position)
   end
 
-  def createQuestion
+  def create_question
     @question = Question.create(question: params[:question])
     if(params[:position] == nil)
       @question.position = @question.id # Did this because it is currently the convention in our seed data.
@@ -11,9 +11,7 @@ class SurveyController < ApplicationController
       @question.position = params[:position]
       @questionsAfter = Question.where("position >= ?", params[:position].to_i).order(position: :desc)
       @questionsAfter.each do |q|
-        puts q.position
         q.position += 1
-        puts q.position
       end
       @questionsAfter.each do |q|
         q.save!

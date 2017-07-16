@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get '/survey', to: 'survey#index'
   get '/survey/manage', to: 'survey#manage'
-  post '/survey/manage', to: 'survey#createQuestion'
+  post '/survey/manage', to: 'survey#create_question'
 
   root 'home#index'
 
