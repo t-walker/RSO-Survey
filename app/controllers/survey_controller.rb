@@ -4,7 +4,7 @@ class SurveyController < ApplicationController
   end
 
   def create_question
-    @question = Question.create(question: params[:question])
+    @question = Question.create(params[:question])
     if(params[:position] == nil)
       @question.position = @question.id # Did this because it is currently the convention in our seed data.
     else
@@ -24,23 +24,25 @@ class SurveyController < ApplicationController
     # less than 4 answers to a question.
     if(params[:answer1] != "")
       nextOrder += 1
-      @question.answers.create(answer: params[:answer1], position: nextOrder)
+      @question.answers.create(answer_title: params[:answer1], position: nextOrder)
     end
     if(params[:answer2] != "")
       nextOrder += 1
-      @question.answers.create(answer: params[:answer2], position: nextOrder)
+      @question.answers.create(answer_title: params[:answer2], position: nextOrder)
     end
     if(params[:answer3] != "")
       nextOrder += 1
-      @question.answers.create(answer: params[:answer3], position: nextOrder)
+      @question.answers.create(answer_title: params[:answer3], position: nextOrder)
     end
     if(params[:answer4] != "")
       nextOrder += 1
-      @question.answers.create(answer: params[:answer4], position: nextOrder)
+      @question.answers.create(answer_title: params[:answer4], position: nextOrder)
     end
+    flash[:success] = "Question created successfully!"
+    redirect_to action: "manage"
   end
 
   def manage
-    @questionNum = Question.count(:question)
+    @questionNum = Question.count(:question_title)
   end
 end

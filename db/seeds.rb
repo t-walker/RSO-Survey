@@ -12,18 +12,18 @@ Question.destroy_all
 Rso.destroy_all
 
 Answer.create([
-  {id: 1, answer: 'Board Game'},
-  {id: 2, answer: 'Go Biking'},
-  {id: 3, answer: 'Painting'},
-  {id: 4, answer: 'Gaming'},
-  {id: 5, answer: 'Knit Something'},
-  {id: 6, answer: 'Write an Algorithm'},
-  {id: 7, answer: 'Go Out'},
-  {id: 8, answer: 'Stay In'},
-  {id: 9, answer: 'Charity Bike Race'},
-  {id: 10, answer: 'Write Novel'},
-  {id: 11, answer: 'Dancing'},
-  {id: 12, answer: 'Walking on the Beach'},
+  {id: 1, answer_title: 'Board Game'},
+  {id: 2, answer_title: 'Go Biking'},
+  {id: 3, answer_title: 'Painting'},
+  {id: 4, answer_title: 'Gaming'},
+  {id: 5, answer_title: 'Knit Something'},
+  {id: 6, answer_title: 'Write an Algorithm'},
+  {id: 7, answer_title: 'Go Out'},
+  {id: 8, answer_title: 'Stay In'},
+  {id: 9, answer_title: 'Charity Bike Race'},
+  {id: 10, answer_title: 'Write Novel'},
+  {id: 11, answer_title: 'Dancing'},
+  {id: 12, answer_title: 'Walking on the Beach'},
 ])
 
 Keyword.create([
@@ -43,12 +43,12 @@ Keyword.create([
 ])
 
 Question.create([
-  {id: 1,  position: 1, question: 'Play a board game or go biking?', answer_ids: [1, 2]},
-  {id: 2,  position: 2, question: 'Painting or gaming?', answer_ids: [3, 4]},
-  {id: 3,  position: 3, question: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
-  {id: 4,  position: 4, question: 'Go out or stay in?', answer_ids: [7, 8] },
-  {id: 5,  position: 5, question: 'Charity bike race or write novel?', answer_ids: [9, 10]},
-  {id: 6,  position: 6, question: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
+  {id: 1,  position: 1, question_title: 'Play a board game or go biking?', answer_ids: [1, 2]},
+  {id: 2,  position: 2, question_title: 'Painting or gaming?', answer_ids: [3, 4]},
+  {id: 3,  position: 3, question_title: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
+  {id: 4,  position: 4, question_title: 'Go out or stay in?', answer_ids: [7, 8] },
+  {id: 5,  position: 5, question_title: 'Charity bike race or write novel?', answer_ids: [9, 10]},
+  {id: 6,  position: 6, question_title: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
 ])
 
 Officer.create([

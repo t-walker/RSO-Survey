@@ -1,34 +1,26 @@
 <h4>Create a question</h4>
-<%= javascript_include_tag 'manageSurvey' %>
-<form action="/survey/manage" method="post" id="newQuestion">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-  <label for="question">Enter a question</label>
-  <input type="text" name="question" />
-  <hr />
-  <p>Now add some possible answers. You can have one to four answers.</p>
-  <label for="answer1">Answer 1:</label>
-  <input type="text" name="answer1" />
-  <br />
-  <label for="answer2">Answer 2:</label>
-  <input type="text" name="answer2" />
-  <br />
-  <label for="answer3">Answer 3:</label>
-  <input type="text" name="answer3" />
-  <br />
-  <label for="answer4">Answer 4:</label>
-  <input type="text" name="answer4" />
-  <br/>
-  <p>Where should this question appear in the survey?
-  Currently there are <%= @questionNum %> questions in the survey. The position
-  you specify will determine the position of the question within the survey.
-  For example, if you were to enter "3", this new question would appear as
-  the third question in the survey. Specifying a number greater than the
-  current number of questions in the survey (<%= @questionNum %>) will put it
-  at the end of the survey. If this field is left blank, the question will be
-  inserted at the end of the survey.</p>
-  <label for="position">Position:</label>
-  <input type="number" name="position" />
-  <br />
 
-  <button type="button" id="submitNewQuestion" onclick="submitQuestion()">Submit</button>
-</form>
+<% if flash[:success] %>
+    <div class="alert alert-success"><%= flash[:success] %></div>
+<% end %>
+<%= form_tag({controller: "survey", action: "create_question"}, method: "post") do %>
+  <%= label_tag(:question_title, "Enter a question") %>
+  <%= text_field_tag(:question_title) %>
+  <br />
+  <%= label_tag(:answer1, "Answer 1:") %>
+  <%= text_field_tag(:answer1) %>
+  <br />
+  <%= label_tag(:answer2, "Answer 2:") %>
+  <%= text_field_tag(:answer2) %>
+  <br />
+  <%= label_tag(:answer3, "Answer 3:") %>
+  <%= text_field_tag(:answer3) %>
+  <br />
+  <%= label_tag(:answer4, "Answer 4:") %>
+  <%= text_field_tag(:answer4) %>
+  <br />
+  <%= label_tag(:position, "Position:") %>
+  <%= text_field_tag(:position) %>
+  <br />
+  <%= submit_tag("Create") %>
+<% end %>
