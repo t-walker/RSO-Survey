@@ -3,7 +3,7 @@
   <li><%= a.answer_title %></li>
   <ul>
   <% a.keywords.each do |k| %>
-    <li><%= k.keyword %> </li>
+    <li><%= k.keyword %> (weight <%= k.weight %>) </li>
   <% end %>
   <li>
     <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
