@@ -45,9 +45,16 @@ class SurveyController < ApplicationController
 
   def manage
     @questionNum = Question.count(:question_title)
+    @questions = Question.order(:position)
   end
 
+  def add_keyword
+    answer = Answer.find(params[:answer_id])
+    answer.keywords.create(keyword: params[:keyword], weight: params[:weight])
+    flash[:success] = "Keyword added successfully!"
+    redirect_to action: "manage"
+  end
 
-  def submit_survey
+  def submit
   end
 end

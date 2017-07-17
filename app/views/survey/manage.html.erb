@@ -24,3 +24,9 @@
   <br />
   <%= submit_tag("Create") %>
 <% end %>
+<hr />
+<h4>Add keyword to answer</h4>
+<% @questions.each do |q| %>
+  <p><%= q.question_title %></p>
+  <%= render partial: 'answer_keyword', :locals => {:q => q} %>
+<% end %>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/survey/manage', to: 'survey#manage'
   post '/survey/manage', to: 'survey#create_question'
   post '/survey/submit', to: 'survey#submit'
+  post '/survey/add_keyword', to: 'survey#add_keyword'
 
   root 'home#index'
 
