@@ -55,6 +55,12 @@ class SurveyController < ApplicationController
     redirect_to action: "manage"
   end
 
+  def delete_keyword
+    Keyword.find(params[:keyword_id]).destroy
+    flash[:success] = "Keyword deleted successfully!"
+    redirect_to action: "manage"
+  end
+
   def submit
   end
 end

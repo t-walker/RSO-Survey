@@ -3,7 +3,12 @@
   <li><%= a.answer_title %></li>
   <ul>
   <% a.keywords.each do |k| %>
-    <li><%= k.keyword %> (weight <%= k.weight %>) </li>
+    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
+      <%= hidden_field_tag(:keyword_id, k.id) %>
+      <li><%= k.keyword %> (weight <%= k.weight %>) </li>
+      <%= submit_tag("Delete keyword") %>
+
+    <% end %>
   <% end %>
   <li>
     <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>

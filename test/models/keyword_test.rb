@@ -14,4 +14,10 @@ class KeywordTest < ActiveSupport::TestCase
     keywerd = Keyword.create(keyword: "Outdoors")
     assert_not keywerd.save, "Saved keyword without the actual keyword text"
   end
+
+  test "should delete a keyword" do
+    keywerd = Keyword.create(keyword: "Outdoors", weight: 1)
+    keywerd.destroy
+    assert_not Keyword.exists?(keywerd.id), "Deleted keyword successfully"
+  end
 end
