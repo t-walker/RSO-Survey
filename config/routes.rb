@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/survey/manage', to: 'survey#create_question'
   post '/survey/submit', to: 'survey#submit'
   post '/survey/add_keyword', to: 'survey#add_keyword'
+  post '/survey/delete_keyword', to: 'survey#delete_keyword'
 
   root 'home#index'
 
