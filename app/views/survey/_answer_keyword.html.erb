@@ -1,0 +1,21 @@
+<ul>
+<% q.answers.each do |a| %>
+  <li><%= a.answer_title %></li>
+  <ul>
+  <% a.keywords.each do |k| %>
+    <li><%= k.keyword %> (weight <%= k.weight %>) </li>
+  <% end %>
+  <li>
+    <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
+      <%= hidden_field_tag(:answer_id, a.id) %>
+      <%= label_tag(:keyword, "New keyword:") %>
+      <%= text_field_tag(:keyword) %>
+      <%= label_tag(:weight, "Weight:") %>
+      <%= text_field_tag(:weight) %>
+      <%= submit_tag("Add keyword") %>
+    <% end %>
+    </li>
+
+  </ul>
+<% end %>
+</ul>

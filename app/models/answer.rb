@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
   belongs_to :question
-  has_many :keyword
+  validates :question_id, :presence => true
+  has_many :keywords
 end

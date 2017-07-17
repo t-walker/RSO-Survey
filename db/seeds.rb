@@ -11,21 +11,6 @@ Officer.destroy_all
 Question.destroy_all
 Rso.destroy_all
 
-Answer.create([
-  {id: 1, answer: 'Board Game'},
-  {id: 2, answer: 'Go Biking'},
-  {id: 3, answer: 'Painting'},
-  {id: 4, answer: 'Gaming'},
-  {id: 5, answer: 'Knit Something'},
-  {id: 6, answer: 'Write an Algorithm'},
-  {id: 7, answer: 'Go Out'},
-  {id: 8, answer: 'Stay In'},
-  {id: 9, answer: 'Charity Bike Race'},
-  {id: 10, answer: 'Write Novel'},
-  {id: 11, answer: 'Dancing'},
-  {id: 12, answer: 'Walking on the Beach'},
-])
-
 Keyword.create([
   {id: 1, answer_id: 1, keyword: 'Gaming', weight: 6},
   {id: 2, answer_id: 2, keyword: 'Physical', weight: 6},
@@ -38,17 +23,35 @@ Keyword.create([
   {id: 9, answer_id: 9, keyword: 'Charity', weight: 6},
   {id: 10, answer_id: 10, keyword: 'Creative', weight: 6},
   {id: 11, answer_id: 11, keyword: 'Active', weight: 6},
-  {id: 12, answer_id: 12, keyword: 'Active', weight: 6},
+  {id: 12, answer_id: 12, keyword: 'Active', weight: 6}
 
 ])
 
+Answer.create([
+  {id: 1, answer_title: 'Board Game', question_id: 1, keyword_ids: [1]},
+  {id: 2, answer_title: 'Go Biking', question_id: 1, keyword_ids: [2]},
+  {id: 3, answer_title: 'Painting', question_id: 2, keyword_ids: [3]},
+  {id: 4, answer_title: 'Gaming', question_id: 2, keyword_ids: [4]},
+  {id: 5, answer_title: 'Knit Something', question_id: 3, keyword_ids: [5]},
+  {id: 6, answer_title: 'Write an Algorithm', question_id: 3, keyword_ids: [6]},
+  {id: 7, answer_title: 'Go Out', question_id: 4, keyword_ids: [7]},
+  {id: 8, answer_title: 'Stay In', question_id: 4, keyword_ids: [8]},
+  {id: 9, answer_title: 'Charity Bike Race', question_id: 5, keyword_ids: [9]},
+  {id: 10, answer_title: 'Write Novel', question_id: 5, keyword_ids: [10]},
+  {id: 11, answer_title: 'Dancing', question_id: 6, keyword_ids: [11]},
+  {id: 12, answer_title: 'Walking on the Beach', question_id: 6, keyword_ids: [12]}
+])
+
+
+
+
 Question.create([
-  {id: 1,  order: 1, question: 'Play a board game or go biking?', answer_ids: [1, 2]},
-  {id: 2,  order: 2, question: 'Painting or gaming?', answer_ids: [3, 4]},
-  {id: 3,  order: 3, question: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
-  {id: 4,  order: 4, question: 'Go out or stay in?', answer_ids: [7, 8] },
-  {id: 5,  order: 5, question: 'Charity bike race or write novel?', answer_ids: [9, 10]},
-  {id: 6,  order: 6, question: 'Dancing or walking on the beach?', answer_ids: [11, 12]},
+  {id: 1,  position: 1, question_title: 'Play a board game or go biking?', answer_ids: [1, 2]},
+  {id: 2,  position: 2, question_title: 'Painting or gaming?', answer_ids: [3, 4]},
+  {id: 3,  position: 3, question_title: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
+  {id: 4,  position: 4, question_title: 'Go out or stay in?', answer_ids: [7, 8]},
+  {id: 5,  position: 5, question_title: 'Charity bike race or write novel?', answer_ids: [9, 10]},
+  {id: 6,  position: 6, question_title: 'Dancing or walking on the beach?', answer_ids: [11, 12]}
 ])
 
 Officer.create([

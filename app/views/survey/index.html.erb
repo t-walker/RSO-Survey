@@ -1,6 +1,8 @@
 <h1>The Survey</h1>
-
-<% @questions.each do |q| %>
-  <%= render partial: 'question', :locals => {:qid => q.id, :questionTitle => q.question, :answers => q.answers} %>
+<%= form_tag({controller: "survey", action: "submit"}, method: "post") do %>
+  <% @questions.each do |q| %>
+    <%= render partial: 'question', :locals => {:position => q.position, :qid => q.id, :questionTitle => q.question_title, :answers => q.answers} %>
+  <% end %>
+  <%= submit_tag "Submit" %>
 <% end %>
 <a href="/">Back to the homepage</a>

@@ -1,10 +1,10 @@
 <div>
   <h4>
-    <%= questionTitle %>
+    Question <%= position %>: <%= questionTitle %>
   </h4>
   <ul>
     <% answers.each_with_index do |a, aindex| %>
-      <%= render partial: 'question-answer', :locals => {:questId => qid, :answerTitle => a.answer, :answerIndex => aindex} %>
+      <%= render partial: 'question-answer', :locals => {:questId => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
     <% end %>
   </ul>
   <hr />
