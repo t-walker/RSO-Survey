@@ -4,7 +4,7 @@ class SurveyController < ApplicationController
   end
 
   def create_question
-    @question = Question.create(params[:question])
+    @question = Question.create(question_title: params[:question_title])
     if(params[:position] == nil)
       @question.position = @question.id # Did this because it is currently the convention in our seed data.
     else
@@ -17,7 +17,7 @@ class SurveyController < ApplicationController
         q.save!
       end
     end
-    @question.save!
+    @question.save(:validate => false)
     nextOrder = 0
 
     # These if statments prevent empty answers from being created if the user wants
@@ -38,6 +38,7 @@ class SurveyController < ApplicationController
       nextOrder += 1
       @question.answers.create(answer_title: params[:answer4], position: nextOrder)
     end
+    @question.save!
     flash[:success] = "Question created successfully!"
     redirect_to action: "manage"
   end

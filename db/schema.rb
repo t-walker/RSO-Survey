@@ -21,12 +21,6 @@ ActiveRecord::Schema.define(version: 20170716180444) do
     t.integer  "response_id"
   end
 
-  create_table "answers_keywords", id: false, force: :cascade do |t|
-    t.integer "answer_id",  null: false
-    t.integer "keyword_id", null: false
-    t.index ["answer_id", "keyword_id"], name: "index_answers_keywords_on_answer_id_and_keyword_id"
-  end
-
   create_table "keywords", force: :cascade do |t|
     t.string   "keyword"
     t.integer  "weight"
