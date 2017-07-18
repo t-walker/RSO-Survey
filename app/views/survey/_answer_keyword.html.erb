@@ -1,26 +1,48 @@
-<ul>
-<% q.answers.each do |a| %>
-  <li><%= a.answer_title %></li>
-  <ul>
-  <% a.keywords.each do |k| %>
-    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
-      <%= hidden_field_tag(:keyword_id, k.id) %>
-      <li><%= k.keyword %> (weight <%= k.weight %>) </li>
-      <%= submit_tag("Delete keyword") %>
+<div class="row">
+  <div class="card-deck">
+    <% q.answers.each do |a| %>
+      <div class="card">
+        <div class="card-header">
+          <h4><%= a.answer_title %></h4>
+        </div>
+        <div class="card-block">
+            <table class="table">
+              <thead>
+                <th>Keyword</th>
+                <th>Weight</th>
+                <th></th>
+              </thead>
+              <% if a.keywords.count > 0 %>
 
+              <% a.keywords.each do |k| %>
+                <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
+                <%= hidden_field_tag(:keyword_id, k.id) %>
+                  <tr>
+                    <td style="width: 45%"><%= k.keyword %></td>
+                    <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
+                    <td style="width: 10%"><%= submit_tag "Delete", class: "btn btn-danger float-right" %></td>
+                  </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </table>
+        </div>
+          <br />
+          <div class="card-footer">
+            <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
+              <%= hidden_field_tag(:answer_id, a.id) %>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control" %></td>
+                    <td style="width: 45%"><%= text_field_tag :weight, "", type: "number", class: "form-control" %></td>
+                    <td style="width: 10%"><%= submit_tag "Create", class: "btn btn-success float-right" %></td>
+                  </tr>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+      </div>
     <% end %>
-  <% end %>
-  <li>
-    <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
-      <%= hidden_field_tag(:answer_id, a.id) %>
-      <%= label_tag(:keyword, "New keyword:") %>
-      <%= text_field_tag(:keyword) %>
-      <%= label_tag(:weight, "Weight:") %>
-      <%= text_field_tag(:weight) %>
-      <%= submit_tag("Add keyword") %>
-    <% end %>
-    </li>
-
-  </ul>
-<% end %>
-</ul>
+  </div>
+</div>
