@@ -10,4 +10,14 @@ class RsoControllerTest < ActionDispatch::IntegrationTest
     get rso_manage_url
     assert_response :success
   end
+
+  test "should not create an RSO without a name" do
+    rso = Rso.create(nickname: "LUG")
+    assert_not rso.save, "Saved an RSO without a name"
+  end
+
+  test "should not create an RSO without a nickname" do
+    rso = Rso.create(name: "Linux Users Group")
+    assert_not rso.save, "Saved an RSO without a nickname"
+  end
 end
