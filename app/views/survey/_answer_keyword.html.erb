@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-<ul>
-<% q.answers.each do |a| %>
-  <li><%= a.answer_title %></li>
-  <ul>
-  <% a.keywords.each do |k| %>
-    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
-      <%= hidden_field_tag(:keyword_id, k.id) %>
-      <li><%= k.keyword %> (weight <%= k.weight %>) </li>
-      <%= submit_tag("Delete keyword") %>
-
-    <% end %>
-  <% end %>
-  <li>
-    <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
-      <%= hidden_field_tag(:answer_id, a.id) %>
-      <%= label_tag(:keyword, "New keyword:") %>
-      <%= text_field_tag(:keyword) %>
-      <%= label_tag(:weight, "Weight:") %>
-      <%= text_field_tag(:weight) %>
-      <%= submit_tag("Add keyword") %>
-    <% end %>
-    </li>
-=======
 <div class="row">
   <div class="card-deck">
     <% q.answers.each do |a| %>
@@ -37,7 +13,6 @@
                 <th></th>
               </thead>
               <% if a.keywords.count > 0 %>
->>>>>>> upstream/master
 
               <% a.keywords.each do |k| %>
                 <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
