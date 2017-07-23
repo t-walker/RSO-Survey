@@ -1,0 +1,8 @@
+
+<p><%= r.name %> (<%= r.nickname %>)</p>
+<% r.keywords.all.each do |k| %>
+  <p><%= k.keyword %>></p>
+<% end %>
+<% r.officers.all.each do |o| %>
+  <p><%= o.first %></p>
+<% end %>

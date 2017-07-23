@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '/rso', to: 'rso#index'
   get '/rso/manage', to: 'rso#manage'
+  post '/rso/create_rso', to: 'rso#create_rso'
 
   get '/admin', to: 'admin#index'
   get '/admin/manage', to: 'admin#manage'
