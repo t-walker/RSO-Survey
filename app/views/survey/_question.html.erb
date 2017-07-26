@@ -4,7 +4,7 @@
   </h4>
   <ul>
     <% answers.each_with_index do |a, aindex| %>
-      <%= render partial: 'question-answer', :locals => {:questId => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
+      <%= render partial: 'question-answer', :locals => {:answer => a, :question_id => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
     <% end %>
   </ul>
   <hr />

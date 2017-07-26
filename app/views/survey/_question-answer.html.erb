@@ -1,6 +1,4 @@
 <li>
-
-  <%= radio_button_tag "responses[][answer" + questId.to_s + "]", :answer %>
-  <%= label_tag(:answer, answerTitle) %>
-
+  <%= radio_button_tag question_id.to_s, answer.id %>
+  <%= label_tag(question_id, answer.answer_title) %>
 </li>

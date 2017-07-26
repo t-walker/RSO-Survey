@@ -89,3 +89,10 @@ Rso.create([
   {id: 26, name: 'Esports and Gaming', nickname: 'EGWSU', officer_ids: [1, 2, 3]},
   {id: 27, name: 'Political Science Club', nickname: 'PSCWSU', officer_ids: [1, 2, 3]}
 ])
+
+Rso.find(1).keywords.create([
+  {keyword: "Gaming", weight: 6},
+  {keyword: "Technology", weight: 10},
+  {keyword: "Computers", weight: 10},
+  {keyword: "Community", weight: 2}
+])

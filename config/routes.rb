@@ -5,10 +5,12 @@ Rails.application.routes.draw do
 
   get '/rso', to: 'rso#index'
   get '/rso/manage', to: 'rso#manage'
-
-  get '/admin', to: 'admin#index'
+  post '/rso/create_rso', to: 'rso#create_rso'
+  post '/rso/delete_rso', to: 'rso#delete_rso'
+  post '/rso/add_keyword', to: 'rso#add_keyword'
+  post '/rso/delete_keyword', to: 'rso#delete_keyword'
   get '/admin/manage', to: 'admin#manage'
-
+  get '/admin', to: 'admin#index'
   get '/survey', to: 'survey#index'
   get '/survey/manage', to: 'survey#manage'
   post '/survey/manage', to: 'survey#create_question'

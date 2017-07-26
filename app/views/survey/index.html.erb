@@ -3,6 +3,6 @@
   <% @questions.each do |q| %>
     <%= render partial: 'question', :locals => {:position => q.position, :qid => q.id, :questionTitle => q.question_title, :answers => q.answers} %>
   <% end %>
-  <%= submit_tag "Submit" %>
+  <%= submit_tag "Submit", class: "btn btn-success" %>
 <% end %>
 <a href="/">Back to the homepage</a>
