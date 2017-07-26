@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   post '/rso/delete_rso', to: 'rso#delete_rso'
   post '/rso/add_keyword', to: 'rso#add_keyword'
   post '/rso/delete_keyword', to: 'rso#delete_keyword'
+  post '/rso/add_officer', to: 'rso#add_officer'
+  post '/rso/delete_officer', to: 'rso#delete_officer'
+
   get '/admin/manage', to: 'admin#manage'
   get '/admin', to: 'admin#index'
   get '/survey', to: 'survey#index'

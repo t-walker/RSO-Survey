@@ -38,5 +38,11 @@ class RsoController < ApplicationController
     redirect_to action: "manage"
   end
 
+  def add_officer
+  end
+
+  def delete_officer
+  end
+
 
 end
