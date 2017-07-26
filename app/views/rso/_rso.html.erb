@@ -1,5 +1,11 @@
 
-<p><%= r.name %> (<%= r.nickname %>)</p>
+<p><%= r.name %>
+  <% if !(r.nickname.empty?) # Test should take care of this but just in case... %>
+    (<%= r.nickname %>)</p>
+  <% else %>
+    </p>
+    <% end %>
+
 <% r.keywords.all.each do |k| %>
   <p><%= k.keyword %>></p>
 <% end %>
