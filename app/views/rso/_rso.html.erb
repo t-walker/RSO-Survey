@@ -1,14 +1,38 @@
+<div class="card">
+  <div class="card-block">
+    <div class="card-title">
+      <h4><%= r.name %></h4>
+    </div>
+    <div class="card-subtitle">
+      <h6><%= r.nickname %></h6>
+    </div>
+    <div class="form-group row">
+      <table class="table">
+        <thead>
+          <th>Keyword</th>
+          <th>Weight</th>
+          <th></th>
+        </thead>
+        <% r.keywords.each do |k| %>
+          <%= form_tag({controller: "rso", action: "delete_keyword"}, method: "post") do %>
+            <%= hidden_field_tag(:keyword_id, k.id) %>
+            <tr>
+              <td style="width: 45%"><%= k.keyword %></td>
+              <td style="width: 45%"><%= k.weight %></td>
+              <td style="width: 10%"><%= submit_tag "Delete Keyword", class: "btn btn-danger float-right" %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <%= form_tag({controller: "rso", action: "add_keyword"}, method: "post") do %>
+          <%= hidden_field_tag(:rso_id, r.id) %>
+          <tr>
+            <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
+            <td style="width: 45%"><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
+            <td style="width: 10%"><%= submit_tag "Add Keyword", class: "btn btn-success float-right" %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
 
-<p><%= r.name %>
-  <% if !(r.nickname.empty?) # Test should take care of this but just in case... %>
-    (<%= r.nickname %>)</p>
-  <% else %>
-    </p>
-    <% end %>
-
-<% r.keywords.all.each do |k| %>
-  <p><%= k.keyword %>></p>
-<% end %>
-<% r.officers.all.each do |o| %>
-  <p><%= o.first %></p>
-<% end %>
+  </div>
+</div>
