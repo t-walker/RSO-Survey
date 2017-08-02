@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 20170802024044) do
   end
 
   create_table "officer_rsos", force: :cascade do |t|
-    t.integer "officer_id", null: false
-    t.integer "rso_id",     null: false
+    t.integer "officer_id"
+    t.integer "rso_id"
     t.index ["officer_id"], name: "index_officer_rsos_on_officer_id"
     t.index ["rso_id"], name: "index_officer_rsos_on_rso_id"
   end
