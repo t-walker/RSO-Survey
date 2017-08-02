@@ -41,10 +41,21 @@ class RsoController < ApplicationController
 
   def add_officer
     newOfficer = Officer.find(params[:officer_id])
+    rso = Rso.find(params[:rso_id])
+    begin
+      rso.officers << newOfficer
+      flash[:success] = "Officer added to RSO successfully"
+    rescue ActiveRecord::RecordInvalid => invalid
+      flash[:error] = "Officer not added to RSO: " + invalid.record.errors.full_messages.join(", ")
+    end
+
+
     redirect_to action: "manage"
   end
 
   def delete_officer
+    Rso.find(params[:rso_id]).officers.delete(Officer.find(params[:officer_id]))
+    flash[:success] = "Officer removed from RSO successfully"
     redirect_to action: "manage"
   end
 

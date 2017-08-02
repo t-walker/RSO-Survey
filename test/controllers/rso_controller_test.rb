@@ -36,13 +36,6 @@ class RsoControllerTest < ActionDispatch::IntegrationTest
     assert_not rso.save, "Saved an RSO with a name longer than 255 characters"
   end
 
-  test "should not create an RSO with two of the same officer" do
-    officer = Officer.create(first: "Barack", last: "Obama")
-    rso1 = Rso.create(name: "LUG", nickname: "Linux Users Group")
-    rso1.officers << officer
-    rso1.officers << officer
-    assert_not rso1.valid?, "Saved an RSO with two of the same officer"
-  end
 
   test "should create two RSOs with the same officer" do
     officer = Officer.create(first: "Barack", last: "Obama")
