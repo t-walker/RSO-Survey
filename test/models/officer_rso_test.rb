@@ -1,9 +1,6 @@
 require 'test_helper'
 
-class RsoTest < ActiveSupport::TestCase
-
-
-
+class OfficerRsoTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

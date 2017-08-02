@@ -4,6 +4,7 @@ class RsoController < ApplicationController
 
   def manage
     @rsos = Rso.order(:name)
+    @officers = Officer.order(:last)
   end
 
   def create_rsos
@@ -39,9 +40,12 @@ class RsoController < ApplicationController
   end
 
   def add_officer
+    newOfficer = Officer.find(params[:officer_id])
+    redirect_to action: "manage"
   end
 
   def delete_officer
+    redirect_to action: "manage"
   end
 
 

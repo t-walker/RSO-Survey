@@ -40,17 +40,27 @@
         <thead>
           <th>Officer Name</th>
           <th></th>
+
         </thead>
         <% r.officers.each do |o| %>
           <%= form_tag({controller: "rso", action: "delete_officer"}, method: "post") do %>
             <% hidden_field_tag(:rso_id, r.id) %>
             <% hidden_field_tag(:officer_id, o.id) %>
             <tr>
-              <td><%= o.first + " " + o.last %></td>
+              <td><%= o.full_name %></td>
               <td><%= submit_tag "Remove Officer From RSO", class: "btn btn-danger float-right" %></td>
             </tr>
           <% end %>
         <% end %>
+        <%= form_tag({controller: "rso", action: "add_officer"}, method: "post") do %>
+        <% hidden_field_tag(:rso_id, r.id) %>
+          <tr>
+            <td><%= select_tag(:officer_id, options_from_collection_for_select(@officers, :id, :full_name), class: "form-control") %></td>
+            <td><%= submit_tag "Add Officer To RSO", class: "btn btn-success float-right" %></td>
+          </tr>
+        <% end %>
+
+
       </table>
     </div>
   </div>

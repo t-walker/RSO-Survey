@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716180444) do
+ActiveRecord::Schema.define(version: 20170802024044) do
 
   create_table "answers", force: :cascade do |t|
     t.string   "answer_title"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20170716180444) do
     t.index ["keyword_id", "rso_id"], name: "index_keywords_rsos_on_keyword_id_and_rso_id"
   end
 
+  create_table "officer_rsos", force: :cascade do |t|
+    t.integer "officer_id", null: false
+    t.integer "rso_id",     null: false
+    t.index ["officer_id"], name: "index_officer_rsos_on_officer_id"
+    t.index ["rso_id"], name: "index_officer_rsos_on_rso_id"
+  end
+
   create_table "officers", force: :cascade do |t|
     t.string   "first"
     t.string   "last"
@@ -42,12 +49,6 @@ ActiveRecord::Schema.define(version: 20170716180444) do
     t.string   "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "officers_rsos", id: false, force: :cascade do |t|
-    t.integer "officer_id", null: false
-    t.integer "rso_id",     null: false
-    t.index ["officer_id", "rso_id"], name: "index_officers_rsos_on_officer_id_and_rso_id"
   end
 
   create_table "questions", force: :cascade do |t|
