@@ -38,7 +38,7 @@ class RsoControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should create two RSOs with the same officer" do
-    officer = Officer.create(first: "Barack", last: "Obama")
+    officer = Officer.create(first: "Barack", last: "Obama", email: "barack@email.com")
     rso1 = Rso.create(name: "Linux Users Group", nickname: "LUG")
     rso2 = Rso.create(name: "Dead Poets Society", nickname: "DPS")
     rso1.officers << officer

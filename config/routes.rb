@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  get '/officer', to: 'officer#index'
+  get '/officer/manage', to: 'officer#manage'
+  post '/officer/create_officer', to: 'officer#create_officer'
+  post '/officer/delete_officer', to: 'officer#delete_officer'
+
   get '/rso', to: 'rso#index'
   get '/rso/manage', to: 'rso#manage'
   post '/rso/create_rso', to: 'rso#create_rso'
