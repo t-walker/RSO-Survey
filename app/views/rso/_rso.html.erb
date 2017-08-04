@@ -60,7 +60,18 @@
 
 
       </table>
+      <div>
+        <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
+          <%= hidden_field_tag(:rso_id, r.id) %>
+          <div>
+            <%= submit_tag "Delete RSO", class: "btn btn-danger" %>
+          </div>
+        <% end %>
+      </div>
     </div>
+
+
+
 
   </div>
 </div>
