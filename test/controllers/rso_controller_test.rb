@@ -26,12 +26,24 @@ class RsoControllerTest < ActionDispatch::IntegrationTest
     rso = Rso.create(name: "Linux Users GroupLinux Users GroupLinux Users GroupLinux
      Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users
      GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux
-     Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users Group")
+     Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users GroupLinux Users Group", nickname: "hello")
     assert_not rso.save, "Saved an RSO with a name longer than 255 characters"
   end
+
   test "should not create an RSO with a nickname longer than 50 characters" do
     # 50+ character-long nickname
     rso = Rso.create(name: "LUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUGLUG")
     assert_not rso.save, "Saved an RSO with a name longer than 255 characters"
+  end
+
+
+  test "should create two RSOs with the same officer" do
+    officer = Officer.create(first: "Barack", last: "Obama", email: "barack@email.com")
+    rso1 = Rso.create(name: "Linux Users Group", nickname: "LUG")
+    rso2 = Rso.create(name: "Dead Poets Society", nickname: "DPS")
+    rso1.officers << officer
+    rso2.officers << officer
+    rso1.save!
+    assert rso2.save!, "Couldn't save an RSO with an officer that is in another RSO"
   end
 end
