@@ -51,6 +51,12 @@ ActiveRecord::Schema.define(version: 20170802024044) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "officers_rsos", id: false, force: :cascade do |t|
+    t.integer "officer_id", null: false
+    t.integer "rso_id",     null: false
+    t.index ["officer_id", "rso_id"], name: "index_officers_rsos_on_officer_id_and_rso_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string   "question_title"
     t.datetime "created_at",     null: false
