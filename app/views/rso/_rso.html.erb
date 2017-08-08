@@ -17,9 +17,9 @@
           <%= form_tag({controller: "rso", action: "delete_keyword"}, method: "post") do %>
             <%= hidden_field_tag(:keyword_id, k.id) %>
             <tr>
-              <td width=45%><%= k.keyword %></td>
-              <td width=45%><%= k.weight %></td>
-              <td width=10%>
+              <td width=40%><%= k.keyword %></td>
+              <td width=40%><%= k.weight %></td>
+              <td width=20%>
                 <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
                 <% end %>
@@ -30,11 +30,11 @@
         <%= form_tag({controller: "rso", action: "add_keyword"}, method: "post") do %>
           <%= hidden_field_tag(:rso_id, r.id) %>
           <tr>
-            <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
-            <td style="width: 45%"><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
-            <td style="width: 10%">
-              <%= button_tag(type: "submit", class: "btn btn-success") do %>
-                <i class="fa fa-plus" aria-hidden="true"></i> Add
+            <td width=40%><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
+            <td width=40%><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
+            <td width=20%>
+              <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
+                <i class="fa fa-plus" aria-hidden="true"></i>
               <% end %>
             </td>
           </tr>
