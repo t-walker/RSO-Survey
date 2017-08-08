@@ -37,7 +37,9 @@
     <div class="row">
       <div class="card-deck">
         <% @rsos.each do |r| %>
+        <div class="col-md-6 d-flex d-flex align-items-stretch" style="margin-bottom: 20px;">
           <%= render partial: "rso", :locals => {:r => r} %>
+        </div>
         <% end %>
       </div>
     </div>

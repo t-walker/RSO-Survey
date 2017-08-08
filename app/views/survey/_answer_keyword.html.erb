@@ -1,6 +1,7 @@
 <div class="row">
   <div class="card-deck">
     <% q.answers.each do |a| %>
+    <div class="col-md-6 d-flex align-items-stretch" style="margin-bottom: 20px;">
       <div class="card">
         <div class="card-header">
           <h4><%= a.answer_title %></h4>
@@ -13,15 +14,14 @@
                 <th></th>
               </thead>
               <% if a.keywords.count > 0 %>
-
-              <% a.keywords.each do |k| %>
-                <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
-                <%= hidden_field_tag(:keyword_id, k.id) %>
-                  <tr>
-                    <td style="width: 45%"><%= k.keyword %></td>
-                    <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
-                    <td style="width: 10%"><%= submit_tag "Delete", class: "btn btn-danger float-right" %></td>
-                  </tr>
+                <% a.keywords.each do |k| %>
+                  <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
+                  <%= hidden_field_tag(:keyword_id, k.id) %>
+                    <tr>
+                      <td style="width: 45%"><%= k.keyword %></td>
+                      <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
+                      <td style="width: 10%"><%= submit_tag "Delete", class: "btn btn-danger float-right" %></td>
+                    </tr>
                   <% end %>
                 <% end %>
               <% end %>
@@ -43,6 +43,7 @@
             <% end %>
           </div>
       </div>
+    </div>
     <% end %>
   </div>
 </div>
