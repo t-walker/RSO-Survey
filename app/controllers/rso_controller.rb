@@ -7,6 +7,11 @@ class RsoController < ApplicationController
     @officers = Officer.order(:last)
   end
 
+  def edit_rso
+    @rso = Rso.find(params[:id])
+    @officers = Officer.order(:last)
+  end
+
   def create_rso
     rso = Rso.create({name: params[:name], nickname: params[:nickname]})
     if(rso.valid?)

@@ -34,14 +34,19 @@
 <hr />
 <div class="row">
   <div class="col-md-12">
-    <div class="row">
-      <div class="card-deck">
-        <% @rsos.each do |r| %>
-        <div class="col-md-6 d-flex d-flex align-items-stretch" style="margin-bottom: 20px;">
-          <%= render partial: "rso", :locals => {:r => r} %>
-        </div>
+    <table class="table">
+      <thead>
+        <th>Organization</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @rsos.each_with_index do |r| %>
+          <tr>
+            <td><%= r.name %></td>
+            <td><%= url_to "edit", action: "manage", controller: "rso" %></td>
+          </tr>
         <% end %>
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </div>
