@@ -1,5 +1,5 @@
 class SurveyController < ApplicationController
-  def index
+  def manage
     @questions = Question.order(:position)
   end
 
