@@ -6,6 +6,9 @@
     <%= r.nickname %>
   </td>
   <td>
+    <%= r.keywords.count %>
+  </td>
+  <td>
     <%= button_to "/rsos/edit/" + r.id.to_s, :method => :get, :class => "btn btn-block btn-success" do %>
       <i class="fa fa-edit" aria-hidden="true"></i>
     <% end %>

@@ -1,4 +1,15 @@
 <h1>The Survey</h1>
+<div class="row">
+  <div class="col-md-12">
+    <% if flash[:success] %>
+        <div class="alert alert-success"><%= flash[:success] %></div>
+    <% end %>
+    <% if flash[:error] %>
+        <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
+  </div>
+</div>
+
 <%= form_tag({controller: "survey", action: "submit"}, method: "post") do %>
   <% @questions.each do |q| %>
     <%= render partial: 'question', :locals => {:position => q.position, :qid => q.id, :questionTitle => q.question_title, :answers => q.answers} %>
