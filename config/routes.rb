@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get '/rsos', to: 'rso#index'
   get '/rsos/manage', to: 'rso#manage'
+  get '/rsos/edit/:id', to: 'rso#edit'
   post '/rsos/create_rso', to: 'rso#create_rso'
   post '/rsos/delete_rso', to: 'rso#delete_rso'
   post '/rsos/add_keyword', to: 'rso#add_keyword'

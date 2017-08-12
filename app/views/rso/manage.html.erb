@@ -35,13 +35,18 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row">
-      <div class="card-deck">
-        <% @rsos.each do |r| %>
-        <div class="col-md-6 d-flex d-flex align-items-stretch" style="margin-bottom: 20px;">
-          <%= render partial: "rso", :locals => {:r => r} %>
-        </div>
-        <% end %>
-      </div>
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Nickname</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <% @rsos.each do |r| %>
+            <%= render partial: "rso", :locals => {:r => r} %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
