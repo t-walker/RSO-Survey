@@ -23,7 +23,9 @@ class RsoController < ApplicationController
   end
 
   def delete_rso
-    if(Rso.find(params[:rso_id]).destroyed?)
+    rso = Rso.find(params[:rso_id])
+    rso.destroy
+    if(rso.destroyed?)
       flash[:success] = "RSO deleted successfully"
     else
       flash[:error] = "RSO not deleted"

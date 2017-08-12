@@ -12,6 +12,7 @@
 <div class="card">
   <div class="card-header">
     <h3 style="text-align: center;"><%= @rso.name %></h3>
+    <h5 style="text-align: center;"><%= @rso.nickname %></h5>
   </div>
   <div class="card-block">
     <div class="form-group row">
@@ -89,5 +90,11 @@
 
   </div>
   <div class="card-footer">
+    <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
+      <%= hidden_field_tag(:rso_id, @rso.id) %>
+      <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
   </div>
 </div>
