@@ -17,10 +17,15 @@
                 <% a.keywords.each do |k| %>
                   <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
                   <%= hidden_field_tag(:keyword_id, k.id) %>
+                  <%= hidden_field_tag(:question_id, q.id) %>
                     <tr>
                       <td style="width: 45%"><%= k.keyword %></td>
                       <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
-                      <td style="width: 10%"><%= submit_tag "Delete", class: "btn btn-danger float-right" %></td>
+                      <td style="width: 10%">
+                        <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <% end %>
+                      </td>
                     </tr>
                   <% end %>
                 <% end %>
@@ -31,12 +36,17 @@
           <div class="card-footer">
             <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
               <%= hidden_field_tag(:answer_id, a.id) %>
+              <%= hidden_field_tag(:question_id, q.id) %>
               <table class="table">
                 <tbody>
                   <tr>
                     <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control" %></td>
                     <td style="width: 45%"><%= text_field_tag :weight, "", type: "number", class: "form-control" %></td>
-                    <td style="width: 10%"><%= submit_tag "Create", class: "btn btn-success float-right" %></td>
+                    <td style="width: 10%">
+                      <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      <% end %>
+                    </td>
                   </tr>
                 </tbody>
               </table>
