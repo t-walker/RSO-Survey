@@ -62,12 +62,14 @@
     <table class="table">
       <thead>
         <th>Question</th>
+        <th>Position</th>
         <th>Edit</th>
       </thead>
       <tbody>
         <% @questions.each do |q| %>
           <tr>
             <td><%= q.question_title %></td>
+            <td><%= q.position %></td>
             <td>
               <%= button_to "/survey/question/" + q.id.to_s, :method => :get, :class => "btn btn-block btn-success" do %>
                 <i class="fa fa-edit" aria-hidden="true"></i>

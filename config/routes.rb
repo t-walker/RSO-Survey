@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get '/rsos', to: 'rso#index'
   get '/rsos/manage', to: 'rso#manage'
-  get '/rsos/edit/:id', to: 'rso#edit'
+  get '/rsos/edit/:id', to: 'rso#edit', as: "edit_rso"
   post '/rsos/create_rso', to: 'rso#create_rso'
   post '/rsos/delete_rso', to: 'rso#delete_rso'
   post '/rsos/add_keyword', to: 'rso#add_keyword'
@@ -22,10 +22,13 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#index'
   get '/survey', to: 'survey#index'
   get '/survey/manage', to: 'survey#manage'
-  get '/survey/question/:id', to: 'survey#edit_question'
+  get '/survey/question/:id', to: 'survey#edit_question', as: "edit_question"
   put '/survey/modify_question/:id', to: 'survey#modify_question'
   post '/survey/manage', to: 'survey#create_question'
   post '/survey/delete_question', to: 'survey#delete_question'
+  post '/survey/delete_answer', to: 'survey#delete_answer'
+  get '/survey/edit_answer/:id', to: 'survey#edit_answer', as: "edit_answer"
+  post '/survey/modify_answer', to: 'survey#modify_answer'
   post '/survey/submit', to: 'survey#submit'
   post '/survey/add_keyword', to: 'survey#add_keyword'
   post '/survey/delete_keyword', to: 'survey#delete_keyword'

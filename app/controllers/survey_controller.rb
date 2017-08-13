@@ -9,9 +9,9 @@ class SurveyController < ApplicationController
 
   def modify_question
     q = Question.find(params[:id])
-    if(params[:position].to_i != q.position)
-      oldPosition = q.position
-      newPosition = params[:position].to_i
+    newPosition = params[:position].to_i
+    oldPosition = q.position
+    if(newPosition != nil && newPosition != oldPosition)
       lastPosition = Question.all.order(position: :desc).first.position
       # If the position submitted by the user is greater than the last position in the survey,
       # just make the question the last one in the survey.
@@ -51,7 +51,7 @@ class SurveyController < ApplicationController
 
   def create_question
     @question = Question.create(question_title: params[:question_title])
-    if(params[:position] == nil)
+    if(params[:position] == "")
       # Add the question to the end of the survey
       lastPosition = Question.all.order(position: :desc).first.position
       @question.position = lastPosition + 1
@@ -133,6 +133,50 @@ class SurveyController < ApplicationController
       flash[:error] = "Question not deleted successfully: " + question.errors.full_messages.join(", ")
     end
     redirect_to action: "manage"
+  end
+
+  def delete_answer
+
+  end
+
+  def edit_answer
+    @a = Answer.find(params[:id])
+    @q = @a.question
+  end
+
+  def modify_answer
+    a = Answer.find(params[:id])
+    oldPosition = a.position
+    newPosition = params[:position].to_i
+    lastPosition = Answer.all.order(position: :desc).first.position
+    answersBetween = {}
+    if(newPosition > lastPosition)
+      newPosition = lastPosition
+    end
+
+    if(newPosition > 4)
+      newPosition = 4
+    else
+      if(oldPosition != nil && oldPosition != newPosition)
+        if(newPosition < oldPosition)
+          answersBetween = Answer.where("position >= ? AND position < ?", newPosition, oldPosition).order(position: :desc)
+          answersBetween.each do |answer|
+            answer.position += 1
+          end
+        else
+          answersBetween = Answer.where("position > ? AND position <= ?", oldPosition, newPosition).order(position: :desc)
+          answersBetween.each do |answer|
+            answer.position -= 1
+          end
+        end
+      end
+      answersBetween.each do |answer|
+        answer.save!
+      end
+    end
+    flash[:success] = "Answer updated"
+    a.update(:answer_title => params[:answer_title], :position => newPosition)
+    redirect_to controller: 'survey', action: 'edit_question', id: a.question.id
   end
 
   def delete_keyword

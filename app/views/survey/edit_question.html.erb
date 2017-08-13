@@ -8,41 +8,41 @@
     <% end %>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <%= form_tag({controller: "survey", action: "modify_question"}, method: "put") do %>
-      <div class="form-group row">
-        <%= label_tag :question_title, "Question: ", class: "col-2 col-form-label"%>
-        <div class="col-5">
-          <%= text_field_tag :question_title, @q.question_title, class: "form-control", type: "text" %>
-        </div>
-      </div>
-      <div class="form-group row">
-        <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
-        <div class="col-5">
-          <%= text_field_tag :position, @q.position, class: "form-control", type: "number" %>
-        </div>
-      </div>
-      <%= submit_tag "Update Question", class: "btn btn-success" %>
+<%= form_tag({controller: "survey", action: "modify_question"}, method: "put") do %>
+  <div class="form-group row">
+    <%= label_tag :question_title, "Question: ", class: "col-2 col-form-label"%>
+    <div class="col-10">
+      <%= text_field_tag :question_title, @q.question_title, class: "form-control", type: "text" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
+    <div class="col-10">
+      <%= text_field_tag :position, @q.position, class: "form-control", type: "number" %>
+    </div>
+  </div>
+  <div class="btn-group">
+    <%= button_tag(type:"submit", class: "btn btn-success") do %>
+      <i class="fa fa-check" aria-hidden="true"></i>
+      Update Question
+    <% end %>
+    <%= form_tag({controller: "survey", action: "delete_question"}, method: "post") do%>
+      <%= hidden_field_tag :id, @q.id %>
+      <%= button_tag(type: "submit", class: "btn btn-danger") do %>
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+        Delete Question
+      <% end %>
     <% end %>
   </div>
+<% end %>
 
-</div>
+
+
 
 <br />
 
 <div class="row">
   <div class="col-md-12">
     <%= render partial: 'answer_keyword', :locals => {:q => @q} %>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <%= form_tag({controller: "survey", action: "delete_question"}, method: "post") do %>
-      <%= hidden_field_tag :id, @q.id %>
-      <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-      <% end %>
-    <% end %>
   </div>
 </div>
