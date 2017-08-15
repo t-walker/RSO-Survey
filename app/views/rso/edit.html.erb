@@ -11,8 +11,35 @@
 
 <div class="card">
   <div class="card-header">
-    <h3 style="text-align: left;"><%= @rso.name %></h3>
-    <h5 style="text-align: left;"><%= @rso.nickname %></h5>
+    <%= form_tag({controller: "rso", action: "modify_rso"}, method: "post") do %>
+      <%= hidden_field_tag(:rso_id, @rso.id) %>
+      <div class="form-group row">
+        <%= label_tag :name, "Name: ", class: "col-2 col-form-label"%>
+        <div class="col-10">
+          <%= text_field_tag :name, @rso.name, class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :nickname, "Nickname: ", class: "col-2 col-form-label"%>
+        <div class="col-10">
+          <%= text_field_tag :nickname, @rso.nickname, class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="btn-group">
+        <%= button_tag(type:"submit", class: "btn btn-success") do %>
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Update RSO
+        <% end %>
+        <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
+          <%= hidden_field_tag(:rso_id, @rso.id) %>
+          <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            Delete RSO
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
   </div>
   <div class="card-block">
     <div class="form-group row">
@@ -90,11 +117,6 @@
 
   </div>
   <div class="card-footer">
-    <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
-      <%= hidden_field_tag(:rso_id, @rso.id) %>
-      <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
-        <i class="fa fa-trash" aria-hidden="true"></i>
-      <% end %>
-    <% end %>
+
   </div>
 </div>

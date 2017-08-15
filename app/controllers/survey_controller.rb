@@ -179,6 +179,18 @@ class SurveyController < ApplicationController
     redirect_to controller: 'survey', action: 'edit_question', id: a.question.id
   end
 
+  def edit_keyword
+    keyword = Keyword.find(params[:keyword_id])
+    keyword.assign_attributes(keyword: params[:keyword], weight: params[:weight])
+    if(keyword.valid?)
+      keyword.save!
+      flash[:success] = "Keyword updated successfully"
+    else
+      flash[:error] = "Keyword not updated: " + keyword.errors.full_messages.join(", ")
+    end
+    redirect_to controller: 'survey', action: 'edit_question', id: params[:question_id]
+  end
+
   def delete_keyword
     Keyword.find(params[:keyword_id]).destroy
     flash[:success] = "Keyword deleted successfully!"
