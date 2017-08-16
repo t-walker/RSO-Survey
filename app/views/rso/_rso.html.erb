@@ -1,81 +1,13 @@
-<div class="card">
-  <div class="card-header">
-    <h3 style="text-align: center;"><%= r.name %></h3>
-  </div>
-  <div class="card-block">
-    <div class="form-group row">
-      <table class="table">
-        <thead>
-          <th>Keyword</th>
-          <th>Weight</th>
-          <th></th>
-        </thead>
-        <% r.keywords.each do |k| %>
-          <%= form_tag({controller: "rso", action: "delete_keyword"}, method: "post") do %>
-            <%= hidden_field_tag(:keyword_id, k.id) %>
-            <tr>
-              <td width=40%><%= k.keyword %></td>
-              <td width=40%><%= k.weight %></td>
-              <td width=20%>
-                <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
-                  <i class="fa fa-trash-o" aria-hidden="true"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
-        <%= form_tag({controller: "rso", action: "add_keyword"}, method: "post") do %>
-          <%= hidden_field_tag(:rso_id, r.id) %>
-          <tr>
-            <td width=40%><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
-            <td width=40%><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
-            <td width=20%>
-              <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
-                <i class="fa fa-plus" aria-hidden="true"></i>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
-    <div class="form-group row">
-      <table class="table">
-        <thead>
-          <th>Officer Name</th>
-          <th></th>
-
-        </thead>
-        <tbody>
-          <% r.officers.each do |o| %>
-            <%= form_tag({controller: "rso", action: "delete_officer"}, method: "post") do %>
-              <%= hidden_field_tag(:rso_id, r.id) %>
-              <%= hidden_field_tag(:officer_id, o.id) %>
-              <tr>
-                <td width=80%><%= o.full_name %></td>
-                <td width=20%>
-                  <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-          <%= form_tag({controller: "rso", action: "add_officer"}, method: "post") do %>
-            <%= hidden_field_tag(:rso_id, r.id) %>
-            <tr>
-              <td width=80%><%= select_tag(:officer_id, options_from_collection_for_select(@officers, :id, :full_name), class: "form-control") %></td>
-              <td width=20%>
-                <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-  <div class="card-footer">
-  </div>
-</div>
+<tr>
+  <td>
+    <%= r.name %>
+  </td>
+  <td>
+    <%= r.nickname %>
+  </td>
+  <td>
+    <%= button_to "/rsos/edit/" + r.id.to_s, :method => :get, :class => "btn btn-block btn-success" do %>
+      <i class="fa fa-edit" aria-hidden="true"></i>
+    <% end %>
+  </td>
+</tr>

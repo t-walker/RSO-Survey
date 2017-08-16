@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-md-12">
+    <% if flash[:success] %>
+        <div class="alert alert-success"><%= flash[:success] %></div>
+    <% end %>
+    <% if flash[:error] %>
+        <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3 style="text-align: center;"><%= @rso.name %></h3>
+    <h5 style="text-align: center;"><%= @rso.nickname %></h5>
+  </div>
+  <div class="card-block">
+    <div class="form-group row">
+      <table class="table">
+        <thead>
+          <th>Keyword</th>
+          <th>Weight</th>
+          <th></th>
+        </thead>
+        <% @rso.keywords.each do |k| %>
+          <%= form_tag({controller: "rso", action: "delete_keyword"}, method: "post") do %>
+            <%= hidden_field_tag(:keyword_id, k.id) %>
+            <%= hidden_field_tag(:rso_id, @rso.id) %>
+            <tr>
+              <td width=40%><%= k.keyword %></td>
+              <td width=40%><%= k.weight %></td>
+              <td width=20%>
+                <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        <%= form_tag({controller: "rso", action: "add_keyword"}, method: "post") do %>
+          <%= hidden_field_tag(:rso_id, @rso.id) %>
+          <tr>
+            <td width=40%><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
+            <td width=40%><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
+            <td width=20%>
+              <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="form-group row">
+      <table class="table">
+        <thead>
+          <th>Officer Name</th>
+          <th></th>
+
+        </thead>
+        <tbody>
+          <% @rso.officers.each do |o| %>
+            <%= form_tag({controller: "rso", action: "delete_officer"}, method: "post") do %>
+              <%= hidden_field_tag(:rso_id, @rso.id) %>
+              <%= hidden_field_tag(:officer_id, o.id) %>
+              <tr>
+                <td width=80%><%= o.full_name %></td>
+                <td width=20%>
+                  <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          <%= form_tag({controller: "rso", action: "add_officer"}, method: "post") do %>
+            <%= hidden_field_tag(:rso_id, @rso.id) %>
+            <tr>
+              <td width=80%><%= select_tag(:officer_id, options_from_collection_for_select(@officers, :id, :full_name), class: "form-control") %></td>
+              <td width=20%>
+                <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="card-footer">
+    <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
+      <%= hidden_field_tag(:rso_id, @rso.id) %>
+      <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

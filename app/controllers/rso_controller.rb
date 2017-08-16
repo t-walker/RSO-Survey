@@ -7,6 +7,11 @@ class RsoController < ApplicationController
     @officers = Officer.order(:last)
   end
 
+  def edit
+    @rso = Rso.find(params[:id])
+    @officers = Officer.order(:last)
+  end
+
   def create_rso
     rso = Rso.create({name: params[:name], nickname: params[:nickname]})
     if(rso.valid?)
@@ -18,7 +23,9 @@ class RsoController < ApplicationController
   end
 
   def delete_rso
-    if(Rso.find(params[:rso_id]).destroyed?)
+    rso = Rso.find(params[:rso_id])
+    rso.destroy
+    if(rso.destroyed?)
       flash[:success] = "RSO deleted successfully"
     else
       flash[:error] = "RSO not deleted"
@@ -33,17 +40,19 @@ class RsoController < ApplicationController
     else
       flash[:error] = "Keyword not added to RSO: " + new_keyword.errors.full_messages.join(", ")
     end
-    redirect_to action: "manage"
+    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
 
   def delete_keyword
-    if(Keyword.find(params[:keyword_id]).destroyed?)
+    keyword = Keyword.find(params[:keyword_id])
+    keyword.destroy
+    if(keyword.destroyed?)
       flash[:success] = "Keyword deleted successfully"
     else
-      flash[:error] = "RSO not deleted"
+      flash[:error] = "Keyword not deleted"
     end
 
-    redirect_to action: "manage"
+    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
 
   def add_officer
@@ -56,8 +65,7 @@ class RsoController < ApplicationController
       flash[:error] = "Officer not added to RSO: " + invalid.record.errors.full_messages.join(", ")
     end
 
-
-    redirect_to action: "manage"
+    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
 
   def delete_officer
@@ -68,8 +76,7 @@ class RsoController < ApplicationController
       flash[:error] = "Officer not removed from RSO"
     end
 
-
-    redirect_to action: "manage"
+    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
 
 
