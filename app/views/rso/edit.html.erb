@@ -47,29 +47,46 @@
         <thead>
           <th>Keyword</th>
           <th>Weight</th>
+          <th>Associated Answers</th>
           <th></th>
         </thead>
         <% @rso.keywords.each do |k| %>
           <%= form_tag({controller: "rso", action: "delete_keyword"}, method: "post") do %>
             <%= hidden_field_tag(:keyword_id, k.id) %>
             <%= hidden_field_tag(:rso_id, @rso.id) %>
+            <% @keyword_count = 0 %>
+            <% answers = [] %>
+            <% @questions = Question.all %>
+            <% @questions.each do |q| %>
+              <% answers = q.answers %>
+              <% answers.each do |an| %>
+                <% @keyword_count += an.keywords.where(keyword: k.keyword).count %>
+              <% end %>
+            <% end %>
             <tr>
-              <td width=40%><%= k.keyword %></td>
-              <td width=40%><%= k.weight %></td>
-              <td width=20%>
+              <td width=30%><%= k.keyword %></td>
+              <td width=30%><%= k.weight %></td>
+              <% if(@keyword_count == 0) %>
+                <td class="text-danger" width=30%><%= @keyword_count %></td>
+              <% else %>
+                <td width=30%><%= @keyword_count %></td>
+              <% end %>
+              <td width=10%>
                 <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
                 <% end %>
               </td>
+
             </tr>
           <% end %>
         <% end %>
         <%= form_tag({controller: "rso", action: "add_keyword"}, method: "post") do %>
           <%= hidden_field_tag(:rso_id, @rso.id) %>
           <tr>
-            <td width=40%><%= text_field_tag :keyword, "", class: "form-control", type: "text" %></td>
-            <td width=40%><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
-            <td width=20%>
+            <td width=30%><%= select_tag(:keyword, options_for_select(@keywords), class: "form-control") %></td>
+            <td width=30%><%= text_field_tag :weight, "", class: "form-control", type: "text" %></td>
+            <td width=30%></td>
+            <td width=10%>
               <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
                 <i class="fa fa-plus" aria-hidden="true"></i>
               <% end %>
