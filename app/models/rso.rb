@@ -8,5 +8,4 @@ class Rso < ApplicationRecord
   validates :nickname, :presence => true
   validates_length_of :nickname, :maximum => 50
 
-  validates_uniqueness_of :keyword, :scope => :keyword
 end
