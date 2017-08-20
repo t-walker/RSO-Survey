@@ -1,98 +1,132 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-Answer.destroy_all
-Keyword.destroy_all
-Officer.destroy_all
-Question.destroy_all
-Rso.destroy_all
-
-Keyword.create([
-  {id: 1, answer_id: 1, keyword: 'Gaming', weight: 6},
-  {id: 2, answer_id: 2, keyword: 'Physical', weight: 6},
-  {id: 3, answer_id: 3, keyword: 'Artistic', weight: 6},
-  {id: 4, answer_id: 4, keyword: 'Gaming', weight: 3},
-  {id: 5, answer_id: 5, keyword: 'Artistic', weight: 6},
-  {id: 6, answer_id: 6, keyword: 'Science', weight: 6},
-  {id: 7, answer_id: 7, keyword: 'Social', weight: 6},
-  {id: 8, answer_id: 8, keyword: 'Introverted', weight: 6},
-  {id: 9, answer_id: 9, keyword: 'Charity', weight: 6},
-  {id: 10, answer_id: 10, keyword: 'Creative', weight: 6},
-  {id: 11, answer_id: 11, keyword: 'Active', weight: 6},
-  {id: 12, answer_id: 12, keyword: 'Active', weight: 6}
-
+Keyword::HABTM_Rsos.create!([
+  {keyword_id: 13, rso_id: 1},
+  {keyword_id: 14, rso_id: 1},
+  {keyword_id: 15, rso_id: 1},
+  {keyword_id: 16, rso_id: 1}
 ])
-
-Answer.create([
-  {id: 1, answer_title: 'Board Game', question_id: 1, keyword_ids: [1]},
-  {id: 2, answer_title: 'Go Biking', question_id: 1, keyword_ids: [2]},
-  {id: 3, answer_title: 'Painting', question_id: 2, keyword_ids: [3]},
-  {id: 4, answer_title: 'Gaming', question_id: 2, keyword_ids: [4]},
-  {id: 5, answer_title: 'Knit Something', question_id: 3, keyword_ids: [5]},
-  {id: 6, answer_title: 'Write an Algorithm', question_id: 3, keyword_ids: [6]},
-  {id: 7, answer_title: 'Go Out', question_id: 4, keyword_ids: [7]},
-  {id: 8, answer_title: 'Stay In', question_id: 4, keyword_ids: [8]},
-  {id: 9, answer_title: 'Charity Bike Race', question_id: 5, keyword_ids: [9]},
-  {id: 10, answer_title: 'Write Novel', question_id: 5, keyword_ids: [10]},
-  {id: 11, answer_title: 'Dancing', question_id: 6, keyword_ids: [11]},
-  {id: 12, answer_title: 'Walking on the Beach', question_id: 6, keyword_ids: [12]}
+Rso::HABTM_Keywords.create!([
+  {keyword_id: 13, rso_id: 1},
+  {keyword_id: 14, rso_id: 1},
+  {keyword_id: 15, rso_id: 1},
+  {keyword_id: 16, rso_id: 1}
 ])
-
-
-
-
-Question.create([
-  {id: 1,  position: 1, question_title: 'Play a board game or go biking?', answer_ids: [1, 2]},
-  {id: 2,  position: 2, question_title: 'Painting or gaming?', answer_ids: [3, 4]},
-  {id: 3,  position: 3, question_title: 'Knit something or write an algorithm?', answer_ids: [5, 6]},
-  {id: 4,  position: 4, question_title: 'Go out or stay in?', answer_ids: [7, 8]},
-  {id: 5,  position: 5, question_title: 'Charity bike race or write novel?', answer_ids: [9, 10]},
-  {id: 6,  position: 6, question_title: 'Dancing or walking on the beach?', answer_ids: [11, 12]}
+Answer.create!([
+  {answer_title: "Board Game", question_id: 1, position: 2, response_id: nil},
+  {answer_title: "Go Biking", question_id: 1, position: 1, response_id: nil},
+  {answer_title: "Painting", question_id: 2, position: 1, response_id: nil},
+  {answer_title: "Gaming", question_id: 2, position: 1, response_id: nil},
+  {answer_title: "Knit Something", question_id: 3, position: 1, response_id: nil},
+  {answer_title: "Write an Algorithm", question_id: 3, position: 1, response_id: nil},
+  {answer_title: "Go Out", question_id: 4, position: 1, response_id: nil},
+  {answer_title: "Stay In", question_id: 4, position: 1, response_id: nil},
+  {answer_title: "Charity Bike Race", question_id: 5, position: 1, response_id: nil},
+  {answer_title: "Write Novel", question_id: 5, position: 1, response_id: nil},
+  {answer_title: "Dancing", question_id: 6, position: 1, response_id: nil},
+  {answer_title: "Walking on the Beach", question_id: 6, position: 1, response_id: nil}
 ])
-
-Officer.create([
-  {id: 1, first: 'Nick', last: 'Vasicek', phone: '555-555-5555', email: 'nick@email.com'},
-  {id: 2, first: 'Charlie', last: 'Hanacek', phone: '555-555-5555', email: 'charlie@email.com'},
-  {id: 3, first: 'Tyler', last: 'Walker', phone: '555-555-5555', email: 'tyler@email.com'}
+Keyword.create!([
+  {keyword: "Gaming", weight: 6, answer_id: 1},
+  {keyword: "Physical", weight: 6, answer_id: 2},
+  {keyword: "Artistic", weight: 6, answer_id: 3},
+  {keyword: "Gaming", weight: 3, answer_id: 4},
+  {keyword: "Artistic", weight: 6, answer_id: 5},
+  {keyword: "Science", weight: 6, answer_id: 6},
+  {keyword: "Social", weight: 6, answer_id: 7},
+  {keyword: "Introverted", weight: 6, answer_id: 8},
+  {keyword: "Charity", weight: 6, answer_id: 9},
+  {keyword: "Creative", weight: 6, answer_id: 10},
+  {keyword: "Active", weight: 6, answer_id: 11},
+  {keyword: "Active", weight: 6, answer_id: 12},
+  {keyword: "Gaming", weight: 6, answer_id: nil},
+  {keyword: "Technology", weight: 10, answer_id: nil},
+  {keyword: "Computers", weight: 10, answer_id: nil},
+  {keyword: "Community", weight: 2, answer_id: nil}
 ])
-
-Rso.create([
-  {id: 1, name: 'Association of Computer Machinery', nickname: 'ACM', officer_ids: [1, 2]},
-  {id: 2, name: 'Linux Users Group', nickname: 'LUG', officer_ids: [1, 2, 3]},
-  {id: 3, name: 'Knitting Club', nickname: 'KNIT', officer_ids: [2]},
-  {id: 4, name: 'Mountain Biking Club', nickname: 'MBC', officer_ids: [1, 2]},
-  {id: 5, name: 'Sportsmans club', nickname: 'SC', officer_ids: [1, 2]},
-  {id: 6, name: 'Black Student Union', nickname: 'BSU', officer_ids: [1, 2]},
-  {id: 7, name: 'Geology Club', nickname: 'WSUGeoClub', officer_ids: [1, 2]},
-  {id: 8, name: 'Sports Management Club', nickname: '', officer_ids: [1, 2]},
-  {id: 9, name: 'Environmental Science Club', nickname: 'ESC', officer_ids: [1, 2]},
-  {id: 10, name: 'The Criminal Justice Club', nickname: 'CJ Club', officer_ids: [1, 2]},
-  {id: 11, name: 'Humans vs Zombies', nickname: 'HvZ', officer_ids: [1, 2]},
-  {id: 12, name: 'Physics and Astronomy Club', nickname: 'Physics', officer_ids: [1, 2]},
-  {id: 13, name: 'Floor Hockey Club', nickname: 'Floor Hockey', officer_ids: [1, 2]},
-  {id: 14, name: 'Smash Bros Club', nickname: 'SBC', officer_ids: [2, 3]},
-  {id: 15, name: 'Digital Media Club', nickname: 'DMC', officer_ids: [3]},
-  {id: 16, name: 'Biology Club', nickname: 'Bio Club', officer_ids: [2]},
-  {id: 17, name: 'Pre Law Society', nickname: 'PLS', officer_ids: [2]},
-  {id: 18, name: 'Food Science Club', nickname: 'FS Club', officer_ids: [1]},
-  {id: 19, name: 'Horticulture Club', nickname: 'Hort Club', officer_ids: [3]},
-  {id: 20, name: 'Judo Club', nickname: 'Judo @ WSU', officer_ids: [1, 3]},
-  {id: 21, name: 'Low Brass Collective', nickname: 'LBC', officer_ids: [3, 2]},
-  {id: 22, name: 'Archery Club', nickname: 'Archery', officer_ids: [1]},
-  {id: 23, name: 'WSU Chess', nickname: 'WSUC', officer_ids: [2]},
-  {id: 24, name: 'Latin Dance Club', nickname: 'LDC', officer_ids: [1]},
-  {id: 25, name: 'Cougs in Space', nickname: 'CiS', officer_ids: [2]},
-  {id: 26, name: 'Esports and Gaming', nickname: 'EGWSU', officer_ids: [1, 2, 3]},
-  {id: 27, name: 'Political Science Club', nickname: 'PSCWSU', officer_ids: [1, 2, 3]}
+Officer.create!([
+  {first: "Nick", last: "Vasicek", email: "nick@email.com", phone: "555-555-5555"},
+  {first: "Charlie", last: "Hanacek", email: "charlie@email.com", phone: "555-555-5555"},
+  {first: "Tyler", last: "Walker", email: "tyler@email.com", phone: "555-555-5555"}
 ])
-
-Rso.find(1).keywords.create([
-  {keyword: "Gaming", weight: 6},
-  {keyword: "Technology", weight: 10},
-  {keyword: "Computers", weight: 10},
-  {keyword: "Community", weight: 2}
+OfficerRso.create!([
+  {officer_id: 1, rso_id: 1},
+  {officer_id: 2, rso_id: 1},
+  {officer_id: 1, rso_id: 2},
+  {officer_id: 2, rso_id: 2},
+  {officer_id: 3, rso_id: 2},
+  {officer_id: 2, rso_id: 3},
+  {officer_id: 1, rso_id: 4},
+  {officer_id: 2, rso_id: 4},
+  {officer_id: 1, rso_id: 5},
+  {officer_id: 2, rso_id: 5},
+  {officer_id: 1, rso_id: 6},
+  {officer_id: 2, rso_id: 6},
+  {officer_id: 1, rso_id: 7},
+  {officer_id: 2, rso_id: 7},
+  {officer_id: 1, rso_id: 9},
+  {officer_id: 2, rso_id: 9},
+  {officer_id: 1, rso_id: 10},
+  {officer_id: 2, rso_id: 10},
+  {officer_id: 1, rso_id: 11},
+  {officer_id: 2, rso_id: 11},
+  {officer_id: 1, rso_id: 12},
+  {officer_id: 2, rso_id: 12},
+  {officer_id: 1, rso_id: 13},
+  {officer_id: 2, rso_id: 13},
+  {officer_id: 2, rso_id: 14},
+  {officer_id: 3, rso_id: 14},
+  {officer_id: 3, rso_id: 15},
+  {officer_id: 2, rso_id: 16},
+  {officer_id: 2, rso_id: 17},
+  {officer_id: 1, rso_id: 18},
+  {officer_id: 3, rso_id: 19},
+  {officer_id: 1, rso_id: 20},
+  {officer_id: 3, rso_id: 20},
+  {officer_id: 3, rso_id: 21},
+  {officer_id: 2, rso_id: 21},
+  {officer_id: 1, rso_id: 22},
+  {officer_id: 2, rso_id: 23},
+  {officer_id: 1, rso_id: 24},
+  {officer_id: 2, rso_id: 25},
+  {officer_id: 1, rso_id: 26},
+  {officer_id: 2, rso_id: 26},
+  {officer_id: 3, rso_id: 26},
+  {officer_id: 1, rso_id: 27},
+  {officer_id: 2, rso_id: 27},
+  {officer_id: 3, rso_id: 27}
+])
+Question.create!([
+  {question_title: "Play a board game or go biking?", position: 3},
+  {question_title: "Painting or gaming?", position: 1},
+  {question_title: "Knit something or write an algorithm?", position: 2},
+  {question_title: "Go out or stay in?", position: 4},
+  {question_title: "Charity bike race or write novel?", position: 5},
+  {question_title: "Dancing or walking on the beach?", position: 6}
+])
+Rso.create!([
+  {name: "Association of Computer Machinery", nickname: "ACM"},
+  {name: "Linux Users Group", nickname: "LUG"},
+  {name: "Knitting Club", nickname: "KNIT"},
+  {name: "Mountain Biking Club", nickname: "MBC"},
+  {name: "Sportsmans club", nickname: "SC"},
+  {name: "Black Student Union", nickname: "BSU"},
+  {name: "Geology Club", nickname: "WSUGeoClub"},
+  {name: "Environmental Science Club", nickname: "ESC"},
+  {name: "The Criminal Justice Club", nickname: "CJ Club"},
+  {name: "Humans vs Zombies", nickname: "HvZ"},
+  {name: "Physics and Astronomy Club", nickname: "Physics"},
+  {name: "Floor Hockey Club", nickname: "Floor Hockey"},
+  {name: "Smash Bros Club", nickname: "SBC"},
+  {name: "Digital Media Club", nickname: "DMC"},
+  {name: "Biology Club", nickname: "Bio Club"},
+  {name: "Pre Law Society", nickname: "PLS"},
+  {name: "Food Science Club", nickname: "FS Club"},
+  {name: "Horticulture Club", nickname: "Hort Club"},
+  {name: "Judo Club", nickname: "Judo @ WSU"},
+  {name: "Low Brass Collective", nickname: "LBC"},
+  {name: "Archery Club", nickname: "Archery"},
+  {name: "WSU Chess", nickname: "WSUC"},
+  {name: "Latin Dance Club", nickname: "LDC"},
+  {name: "Cougs in Space", nickname: "CiS"},
+  {name: "Esports and Gaming", nickname: "EGWSU"},
+  {name: "Political Science Club", nickname: "PSCWSU"}
 ])

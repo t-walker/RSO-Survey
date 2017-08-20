@@ -7,4 +7,5 @@ class Rso < ApplicationRecord
   validates_length_of :name, :maximum => 255
   validates :nickname, :presence => true
   validates_length_of :nickname, :maximum => 50
+
 end

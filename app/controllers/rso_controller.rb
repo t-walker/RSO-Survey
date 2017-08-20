@@ -8,8 +8,21 @@ class RsoController < ApplicationController
   end
 
   def edit
-    @rso = Rso.find(params[:id])
+    @rso = Rso.includes(:keywords).find(params[:id])
     @officers = Officer.order(:last)
+    @keywords = Keyword.uniq.pluck(:keyword).sort!
+  end
+
+  def modify_rso
+    rso = Rso.find(params[:rso_id])
+    rso.assign_attributes(name: params[:name], nickname: params[:nickname])
+    if(rso.valid?)
+      rso.save!
+      flash[:success] = "RSO updated successfully"
+    else
+      flash[:error] = "RSO not updated: " + rso.errors.full_messages.join(", ")
+    end
+    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
 
   def create_rso
@@ -41,6 +54,17 @@ class RsoController < ApplicationController
       flash[:error] = "Keyword not added to RSO: " + new_keyword.errors.full_messages.join(", ")
     end
     redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
+  end
+
+  def edit_keyword
+    keyword = Keyword.find(params[:keyword_id])
+    keyword.assign_attributes(keyword: params[:keyword], weight: params[:weight])
+    if(keyword.valid?)
+      keyword.save!
+      flash[:success] = "Keyword updated successfully"
+    else
+      flash[:error] = "Keyword not updated: " + keyword.errors.full_messages.join(", ")
+    end
   end
 
   def delete_keyword

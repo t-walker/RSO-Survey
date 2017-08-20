@@ -35,6 +35,9 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 # Font Awesome
 gem "font-awesome-rails", '~> 4.7.0'
 
+
+# seed dump
+gem "seed_dump"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -47,7 +47,7 @@ class ManageSurveyControllerTest < ActionDispatch::IntegrationTest
     question = Question.create(id: 44, question_title: "What is the meaning of life?")
     question.save(:validate => false)
     question.answers.create([{answer_title: "41"}, {answer_title: "42"}, {answer_title: "43"}])
-    question.save!
+    question.save
     aQuestion = Question.find(id = 44)
     assert question.question_title == aQuestion.question_title, "Didn't get the same question title with the same question id"
   end
