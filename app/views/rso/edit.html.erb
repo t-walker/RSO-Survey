@@ -11,7 +11,7 @@
 
 <div class="card">
   <div class="card-header">
-    <%= form_tag({controller: "rso", action: "modify_rso"}, method: "post") do %>
+    <%= form_tag({controller: "rso", action: "modify_rso"}, method: "post", id: "modify_rso") do %>
       <%= hidden_field_tag(:rso_id, @rso.id) %>
       <div class="form-group row">
         <%= label_tag :name, "Name: ", class: "col-2 col-form-label"%>
@@ -25,21 +25,20 @@
           <%= text_field_tag :nickname, @rso.nickname, class: "form-control", type: "text" %>
         </div>
       </div>
-      <div class="btn-group">
-        <%= button_tag(type:"submit", class: "btn btn-success") do %>
-          <i class="fa fa-check" aria-hidden="true"></i>
-          Update RSO
-        <% end %>
-        <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post") do %>
-          <%= hidden_field_tag(:rso_id, @rso.id) %>
-          <%= button_tag(type: "submit", class: "btn btn-block btn-danger") do %>
-            <i class="fa fa-trash" aria-hidden="true"></i>
-            Delete RSO
-          <% end %>
-        <% end %>
-      </div>
     <% end %>
-
+    <%= form_tag({controller: "rso", action: "delete_rso"}, method: "post", id: "delete_rso") do %>
+      <%= hidden_field_tag(:rso_id, @rso.id) %>
+    <% end %>
+    <div class="btn-group">
+      <%= button_tag(type:"submit", class: "btn btn-success", form: "modify_rso") do %>
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Update RSO
+      <% end %>
+      <%= button_tag(type: "submit", class: "btn btn-block btn-danger", form: "delete_rso") do %>
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Delete RSO
+      <% end %>
+    </div>
   </div>
   <div class="card-block">
     <div class="form-group row">

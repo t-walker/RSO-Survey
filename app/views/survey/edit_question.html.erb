@@ -8,36 +8,41 @@
     <% end %>
   </div>
 </div>
-<%= form_tag({controller: "survey", action: "modify_question"}, method: "put") do %>
-  <div class="form-group row">
-    <%= label_tag :question_title, "Question: ", class: "col-2 col-form-label"%>
-    <div class="col-10">
-      <%= text_field_tag :question_title, @q.question_title, class: "form-control", type: "text" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
-    <div class="col-10">
-      <%= text_field_tag :position, @q.position, class: "form-control", type: "number" %>
-    </div>
-  </div>
-  <div class="btn-group">
-    <%= button_tag(type:"submit", class: "btn btn-success") do %>
-      <i class="fa fa-check" aria-hidden="true"></i>
-      Update Question
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag({controller: "survey", action: "modify_question"}, method: "put", id: "modify_question") do %>
+      <div class="form-group row">
+        <%= label_tag :question_title, "Question: ", class: "col-2 col-form-label"%>
+        <div class="col-10">
+          <%= text_field_tag :question_title, @q.question_title, class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
+        <div class="col-10">
+          <%= text_field_tag :position, @q.position, class: "form-control", type: "number" %>
+        </div>
+      </div>
     <% end %>
-    <%= form_tag({controller: "survey", action: "delete_question"}, method: "post") do%>
+    <%= form_tag({controller: "survey", action: "delete_question"}, method: "post", id: "delete_question") do%>
       <%= hidden_field_tag :id, @q.id %>
-      <%= button_tag(type: "submit", class: "btn btn-danger") do %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn-group">
+      <%= button_tag(type:"submit", class: "btn btn-success", form: "modify_question") do %>
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Update Question
+      <% end %>
+      <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_question") do %>
         <i class="fa fa-trash-o" aria-hidden="true"></i>
         Delete Question
       <% end %>
-    <% end %>
+    </div>
   </div>
-<% end %>
-
-
-
+</div>
 
 <br />
 

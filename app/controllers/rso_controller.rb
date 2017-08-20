@@ -10,7 +10,7 @@ class RsoController < ApplicationController
   def edit
     @rso = Rso.includes(:keywords).find(params[:id])
     @officers = Officer.order(:last)
-    @keywords = Keyword.uniq.pluck(:keyword)
+    @keywords = Keyword.uniq.pluck(:keyword).sort!
   end
 
   def modify_rso
