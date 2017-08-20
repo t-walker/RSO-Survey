@@ -204,21 +204,22 @@ class SurveyController < ApplicationController
     end
     user_keywords = {}
     response.answers.each do |a|
+      answer_weight_sum = a.keywords.sum(:weight)
       a.keywords.each do |k|
-        user_keywords[k.keyword] = k.weight
+        user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
       end
     end
     rso_keywords = {}
     rsos = Rso.all
     rsos.each do |r|
       rso_keywords[r.id] = {}
+      keyword_weight_sum = r.keywords.sum(:weight)
+      # normalize keyword weights so they are relative within the RSO
       r.keywords.each do |k|
-        rso_keywords[r.id][k.keyword] = k.weight
+        rso_keywords[r.id][k.keyword] = k.weight.to_f / keyword_weight_sum
       end
     end
     rso_match_strengths = {}
-    puts rso_keywords.inspect
-    puts user_keywords.inspect
     rso_keywords.keys.each do |rso_id|
       rso_match_strengths[rso_id] = 0
       rso_keywords[rso_id].keys.each do |keyword|
@@ -229,15 +230,22 @@ class SurveyController < ApplicationController
       end
     end
 
-
-
-    puts rso_keywords.inspect
+    # Rank the matches from highest to lowest.
     rso_match_strengths = rso_match_strengths.sort_by{ |rso_id, strength| strength}.reverse
-    puts rso_match_strengths.inspect
+
     flash[:success] = "You matched with "
-    for i in 0..3
-      flash[:success] += Rso.find(rso_match_strengths[i][0]).name + ", "
+    max_matches = 5
+    i = 0
+    while i < max_matches and rso_match_strengths[i][1] > 0
+      flash[:success] += Rso.find(rso_match_strengths[i][0]).name
+      i++
+      if(rso_match_strengths[i][1] <= 0 or i >= max_matches)
+        flash[:success] += "."
+      else
+        flash[:success] += ", "
+      end
     end
+
     flash[:success] += Rso.find(rso_match_strengths[4][0]).name + "."
 
     #
