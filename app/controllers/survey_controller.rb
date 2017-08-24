@@ -262,7 +262,7 @@ class SurveyController < ApplicationController
           flash[:results] += Rso.find(rso_match_strengths[i][0]).name
           # Uncomment the code below to append the match strength to the results
           #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
-          if(rso_match_strengths[i + 1][1] > 0 and i <= max_matches - 1 )
+          if(rso_match_strengths[i + 1][1] > 0 and i < max_matches - 1 )
             flash[:results] += ", "
           else
             flash[:results] += "."
