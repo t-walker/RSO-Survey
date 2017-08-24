@@ -58,7 +58,7 @@ class RsoController < ApplicationController
 
   def edit_keyword
     keyword = Keyword.find(params[:keyword_id])
-    keyword.assign_attributes(keyword: params[:keyword], weight: params[:weight])
+    keyword.update(keyword: params[:keyword], weight: params[:weight])
     if(keyword.valid?)
       keyword.save!
       flash[:success] = "Keyword updated successfully"

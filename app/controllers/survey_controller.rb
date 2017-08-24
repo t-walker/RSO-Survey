@@ -53,7 +53,10 @@ class SurveyController < ApplicationController
     @question = Question.create(question_title: params[:question_title])
     if(params[:position] == "")
       # Add the question to the end of the survey
-      lastPosition = Question.all.order(position: :desc).first.position
+      lastPosition = 0
+      if(Question.exists?)
+        lastPosition = Question.all.order(position: :desc).first.position
+      end
       @question.position = lastPosition + 1
     else
       lastPosition = Question.all.order(position: :desc).first.position
@@ -181,9 +184,15 @@ class SurveyController < ApplicationController
 
   def edit_keyword
     keyword = Keyword.find(params[:keyword_id])
-    keyword.assign_attributes(keyword: params[:keyword], weight: params[:weight])
+    old_keyword = keyword.keyword
+    keyword.update(keyword: params[:keyword], weight: params[:weight])
     if(keyword.valid?)
       keyword.save!
+      keywords_to_update = Keyword.where(keyword: old_keyword)
+      keywords_to_update.each do |k|
+        k.update(keyword: params[:keyword])
+        k.save!
+      end
       flash[:success] = "Keyword updated successfully"
     else
       flash[:error] = "Keyword not updated: " + keyword.errors.full_messages.join(", ")
@@ -192,69 +201,79 @@ class SurveyController < ApplicationController
   end
 
   def delete_keyword
-    Keyword.find(params[:keyword_id]).destroy
-    flash[:success] = "Keyword deleted successfully!"
+    keyword = Keyword.find(params[:keyword_id])
+    keyword.destroy
+    if(keyword.destroyed?)
+      flash[:success] = "Keyword deleted successfully!"
+    else
+      flash[:error] = "Keyword not deleted: " + keyword.errors.full_messages.join(", ")
+    end
+
     redirect_to controller: 'survey', action: 'edit_question', id: params[:question_id]
   end
 
   def submit
     response = Response.create()
-    params["question"].keys.each do |q|
-      response.answers << Answer.find(params["question"][q])
-    end
-    user_keywords = {}
-    response.answers.each do |a|
-      answer_weight_sum = a.keywords.sum(:weight)
-      a.keywords.each do |k|
-        user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
+    if(params["question"])
+      params["question"].keys.each do |q|
+        response.answers << Answer.find(params["question"][q])
       end
-    end
-    rso_keywords = {}
-    rsos = Rso.all
-    rsos.each do |r|
-      rso_keywords[r.id] = {}
-      keyword_weight_sum = r.keywords.sum(:weight)
-      # normalize keyword weights so they are relative within the RSO
-      r.keywords.each do |k|
-        rso_keywords[r.id][k.keyword] = k.weight.to_f / keyword_weight_sum
-      end
-    end
-    rso_match_strengths = {}
-    rso_keywords.keys.each do |rso_id|
-      rso_match_strengths[rso_id] = 0
-      rso_keywords[rso_id].keys.each do |keyword|
-        if(user_keywords.key?(keyword))
-          rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] * user_keywords[keyword]
-          rso_match_strengths[rso_id] += rso_keywords[rso_id][keyword]
+      user_keywords = {}
+      response.answers.each do |a|
+        answer_weight_sum = a.keywords.sum(:weight)
+        a.keywords.each do |k|
+          user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
         end
       end
-    end
-
-    # Rank the matches from highest to lowest.
-    rso_match_strengths = rso_match_strengths.sort_by{ |rso_id, strength| strength}.reverse
-
-    flash[:success] = "You matched with "
-    max_matches = 5
-    i = 0
-    while i < max_matches and rso_match_strengths[i][1] > 0
-      flash[:success] += Rso.find(rso_match_strengths[i][0]).name
-      i++
-      if(rso_match_strengths[i][1] <= 0 or i >= max_matches)
-        flash[:success] += "."
-      else
-        flash[:success] += ", "
+      rso_keywords = {}
+      rsos = Rso.all
+      rsos.each do |r|
+        rso_keywords[r.id] = {}
+        keyword_weight_sum = r.keywords.sum(:weight)
+        # normalize keyword weights so they are relative within the RSO
+        r.keywords.each do |k|
+          rso_keywords[r.id][k.keyword] = k.weight.to_f / keyword_weight_sum
+        end
       end
+      rso_match_strengths = {}
+      rso_keywords.keys.each do |rso_id|
+        rso_match_strengths[rso_id] = 0
+        rso_keywords[rso_id].keys.each do |keyword|
+          if(user_keywords.key?(keyword))
+            rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] * user_keywords[keyword]
+            rso_match_strengths[rso_id] += rso_keywords[rso_id][keyword]
+          end
+        end
+      end
+
+      # Rank the matches from highest to lowest.
+      rso_match_strengths = rso_match_strengths.sort_by{ |rso_id, strength| strength}.reverse
+
+      i = 0
+      if(rso_match_strengths[i][1] == 0.to_f)
+        flash[:results] = "You didn't match with any clubs."
+      else
+        flash[:results] = "You matched with "
+        max_matches = 5
+        while i < max_matches and rso_match_strengths[i][1] > 0
+          if(rso_match_strengths[i + 1][1] == 0.0 or i == max_matches - 1)
+            flash[:results] += " and "
+          end
+          flash[:results] += Rso.find(rso_match_strengths[i][0]).name
+          # Uncomment the code below to append the match strength to the results
+          #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
+          if(rso_match_strengths[i + 1][1] > 0 and i <= max_matches - 1 )
+            flash[:results] += ", "
+          else
+            flash[:results] += "."
+          end
+          i += 1
+        end
+      end
+    else
+      flash[:error] = "You need to answer at least one survey question. Please try again."
     end
 
-    flash[:success] += Rso.find(rso_match_strengths[4][0]).name + "."
-
-    #
-    # slope_one.insert(rso_keywords)
-    # slope_one_result = slope_one.predict(user_keywords)
-    # user_results = {}
-    # slope_one_result.each do |k|
-    #
-    # puts rso_keywords.inspect
     redirect_to action: "index"
   end
 end

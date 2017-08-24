@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812051517) do
+ActiveRecord::Schema.define(version: 20170823222709) do
 
   create_table "answers", force: :cascade do |t|
     t.string   "answer_title"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 20170812051517) do
   create_table "responses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rso_keywords", force: :cascade do |t|
+    t.integer "rso_id"
+    t.integer "keyword_id"
+    t.index ["keyword_id"], name: "index_rso_keywords_on_keyword_id"
+    t.index ["rso_id"], name: "index_rso_keywords_on_rso_id"
   end
 
   create_table "rsos", force: :cascade do |t|

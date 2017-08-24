@@ -55,21 +55,22 @@
               <% if a.keywords.count > 0 %>
                 <% a.keywords.each do |k| %>
                   <tr>
-                    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post", id: "delete_keyword") do %>
-                      <%= hidden_field_tag(:keyword_id, k.id) %>
-                    <% end %>
-                    <%= form_tag({controller: "survey", action: "edit_keyword"}, method: "post", id: "edit_keyword") do %>
+                    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post", id: "delete_keyword" + k.id.to_s) do %>
                       <%= hidden_field_tag(:keyword_id, k.id) %>
                       <%= hidden_field_tag(:question_id, q.id) %>
                     <% end %>
-                    <td style="width: 45%"><%= text_field_tag :keyword, k.keyword, type: "text", class: "form-control" %></td>
-                    <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
+                    <%= form_tag({controller: "survey", action: "edit_keyword"}, method: "post", id: "edit_keyword" + k.id.to_s) do %>
+                      <%= hidden_field_tag(:keyword_id, k.id) %>
+                      <%= hidden_field_tag(:question_id, q.id) %>
+                    <% end %>
+                    <td style="width: 45%"><%= text_field_tag :keyword, k.keyword, type: "text", class: "form-control", form: "edit_keyword" + k.id.to_s%></td>
+                    <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control", form: "edit_keyword" + k.id.to_s%></td>
                     <td style="width: 10%">
                       <div class="btn-group">
-                        <%= button_tag(type: "submit", class: "btn btn-success", form: "edit_keyword") do %>
+                        <%= button_tag(type: "submit", class: "btn btn-success", form: "edit_keyword" + k.id.to_s) do %>
                           <i class="fa fa-check" aria-hidden="true"></i>
                         <% end %>
-                        <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_keyword") do %>
+                        <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_keyword" + k.id.to_s) do %>
                           <i class="fa fa-trash-o" aria-hidden="true"></i>
                         <% end %>
                       </div>
