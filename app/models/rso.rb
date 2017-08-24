@@ -1,5 +1,7 @@
 class Rso < ApplicationRecord
-  has_and_belongs_to_many :keywords
+  has_many :rso_keywords
+  has_many :keywords, through: :rso_keywords
+  
   has_many :officer_rsos
   has_many :officers, through: :officer_rsos
 

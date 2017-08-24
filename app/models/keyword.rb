@@ -3,6 +3,5 @@ class Keyword < ApplicationRecord
   validates :weight, :numericality => { :greater_than_or_equal_to => 0 }
   validates :keyword, :presence => true
   belongs_to :answer
-
-  has_and_belongs_to_many :rsos
+  belongs_to :rso
 end

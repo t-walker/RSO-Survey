@@ -12,14 +12,14 @@
   <div class="col-md-12">
     <%= form_tag({controller: "survey", action: "modify_question"}, method: "put", id: "modify_question") do %>
       <div class="form-group row">
-        <%= label_tag :question_title, "Question: ", class: "col-2 col-form-label"%>
-        <div class="col-10">
+        <%= label_tag :question_title, "Question: ", class: "col-md-2 col-form-label"%>
+        <div class="col-md-10">
           <%= text_field_tag :question_title, @q.question_title, class: "form-control", type: "text" %>
         </div>
       </div>
       <div class="form-group row">
-        <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
-        <div class="col-10">
+        <%= label_tag :position, "Position: ", class: "col-md-2 col-form-label"%>
+        <div class="col-md-10">
           <%= text_field_tag :position, @q.position, class: "form-control", type: "number" %>
         </div>
       </div>
@@ -34,11 +34,11 @@
     <div class="btn-group">
       <%= button_tag(type:"submit", class: "btn btn-success", form: "modify_question") do %>
         <i class="fa fa-check" aria-hidden="true"></i>
-        Update Question
+        Update
       <% end %>
       <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_question") do %>
         <i class="fa fa-trash-o" aria-hidden="true"></i>
-        Delete Question
+        Delete
       <% end %>
     </div>
   </div>
