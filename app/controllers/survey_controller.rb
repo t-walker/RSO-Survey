@@ -51,16 +51,14 @@ class SurveyController < ApplicationController
 
   def create_question
     @question = Question.create(question_title: params[:question_title])
+    lastPosition = 0
+    if(Question.exists?)
+      lastPosition = Question.all.order(position: :desc).first.position
+    end
     if(params[:position] == "")
       # Add the question to the end of the survey
-      lastPosition = 0
-      if(Question.exists?)
-        lastPosition = Question.all.order(position: :desc).first.position
-      end
       @question.position = lastPosition + 1
     else
-      lastPosition = Question.all.order(position: :desc).first.position
-      puts lastPosition
       # If the position submitted by the user is greater than the last position in the survey,
       # just make the question the last one in the survey.
       if(params[:position].to_i > lastPosition)
@@ -221,6 +219,11 @@ class SurveyController < ApplicationController
       user_keywords = {}
       response.answers.each do |a|
         answer_weight_sum = a.keywords.sum(:weight)
+        keyword_sum = a.keywords.count()
+        a.keywords.each do |k|
+          user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
+          #user_keywords[k.keyword] /= keyword_sum
+        end
         a.keywords.each do |k|
           user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
         end
@@ -230,9 +233,11 @@ class SurveyController < ApplicationController
       rsos.each do |r|
         rso_keywords[r.id] = {}
         keyword_weight_sum = r.keywords.sum(:weight)
+        keyword_sum = r.keywords.count()
         # normalize keyword weights so they are relative within the RSO
         r.keywords.each do |k|
           rso_keywords[r.id][k.keyword] = k.weight.to_f / keyword_weight_sum
+          #rso_keywords[r.id][k.keyword] =
         end
       end
       rso_match_strengths = {}
