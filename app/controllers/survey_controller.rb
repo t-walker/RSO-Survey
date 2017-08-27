@@ -51,16 +51,14 @@ class SurveyController < ApplicationController
 
   def create_question
     @question = Question.create(question_title: params[:question_title])
+    lastPosition = 0
+    if(Question.exists?)
+      lastPosition = Question.all.order(position: :desc).first.position
+    end
     if(params[:position] == "")
       # Add the question to the end of the survey
-      lastPosition = 0
-      if(Question.exists?)
-        lastPosition = Question.all.order(position: :desc).first.position
-      end
       @question.position = lastPosition + 1
     else
-      lastPosition = Question.all.order(position: :desc).first.position
-      puts lastPosition
       # If the position submitted by the user is greater than the last position in the survey,
       # just make the question the last one in the survey.
       if(params[:position].to_i > lastPosition)
@@ -221,8 +219,10 @@ class SurveyController < ApplicationController
       user_keywords = {}
       response.answers.each do |a|
         answer_weight_sum = a.keywords.sum(:weight)
+        keyword_sum = a.keywords.count()
         a.keywords.each do |k|
           user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
+          #user_keywords[k.keyword] /= keyword_sum
         end
       end
       rso_keywords = {}
@@ -230,9 +230,11 @@ class SurveyController < ApplicationController
       rsos.each do |r|
         rso_keywords[r.id] = {}
         keyword_weight_sum = r.keywords.sum(:weight)
+        keyword_sum = r.keywords.count()
         # normalize keyword weights so they are relative within the RSO
         r.keywords.each do |k|
           rso_keywords[r.id][k.keyword] = k.weight.to_f / keyword_weight_sum
+          #rso_keywords[r.id][k.keyword] =
         end
       end
       rso_match_strengths = {}
@@ -240,7 +242,7 @@ class SurveyController < ApplicationController
         rso_match_strengths[rso_id] = 0
         rso_keywords[rso_id].keys.each do |keyword|
           if(user_keywords.key?(keyword))
-            rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] * user_keywords[keyword]
+            rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] / user_keywords[keyword]
             rso_match_strengths[rso_id] += rso_keywords[rso_id][keyword]
           end
         end
@@ -261,7 +263,7 @@ class SurveyController < ApplicationController
           end
           flash[:results] += Rso.find(rso_match_strengths[i][0]).name
           # Uncomment the code below to append the match strength to the results
-          #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
+          flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
           if(rso_match_strengths[i + 1][1] > 0 and i < max_matches - 1 )
             flash[:results] += ", "
           else
