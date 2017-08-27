@@ -224,6 +224,9 @@ class SurveyController < ApplicationController
           user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
           #user_keywords[k.keyword] /= keyword_sum
         end
+        a.keywords.each do |k|
+          user_keywords[k.keyword] = k.weight.to_f / answer_weight_sum
+        end
       end
       rso_keywords = {}
       rsos = Rso.all
@@ -242,7 +245,7 @@ class SurveyController < ApplicationController
         rso_match_strengths[rso_id] = 0
         rso_keywords[rso_id].keys.each do |keyword|
           if(user_keywords.key?(keyword))
-            rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] / user_keywords[keyword]
+            rso_keywords[rso_id][keyword] = rso_keywords[rso_id][keyword] * user_keywords[keyword]
             rso_match_strengths[rso_id] += rso_keywords[rso_id][keyword]
           end
         end
@@ -263,7 +266,7 @@ class SurveyController < ApplicationController
           end
           flash[:results] += Rso.find(rso_match_strengths[i][0]).name
           # Uncomment the code below to append the match strength to the results
-          flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
+          #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
           if(rso_match_strengths[i + 1][1] > 0 and i < max_matches - 1 )
             flash[:results] += ", "
           else
