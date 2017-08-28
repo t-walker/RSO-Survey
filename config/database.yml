@@ -24,4 +24,4 @@ production:
   username: <%= ENV['POSTGRES_USERNAME'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
   adapter: postgresql
-  database: prod_database
+  database: <%= ENV['POSTGRES_DATABASE'] %>
