@@ -12,7 +12,7 @@ class Question < ApplicationRecord
   validates :position, :presence => true
   validates :question_title, :presence => true
   validate :answer_limits
-  has_many :answers
+  has_many :answers, :dependent => :delete_all
 
 
 end
