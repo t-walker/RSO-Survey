@@ -1,12 +1,12 @@
-<div>
-  <h4>
-    Question <%= position %>: <%= questionTitle %>
-  </h4>
-  <ul>
-    <% answers.each_with_index do |a, aindex| %>
-      <%= render partial: 'question-answer', :locals => {:answer => a, :question_id => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
-    <% end %>
-  </ul>
-  <hr />
-
+<div class="card">
+  <div class="card-block">
+    <h4 class="card-title">
+      Question <%= position %>: <%= questionTitle %>
+    </h4>
+      <div class="btn-group-vertical" data-toggle="buttons">
+      <% answers.each_with_index do |a, aindex| %>
+          <%= render partial: 'question-answer', :locals => {:answer => a, :question_id => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
+      <% end %>
+      </div>
+  </div>
 </div>
