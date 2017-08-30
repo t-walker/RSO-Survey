@@ -65,7 +65,7 @@
               <% end %>
               <tr>
                 <td width=30%><%= k.keyword %></td>
-                <td width=30%><%= k.weight %></td>
+                <td width=30%><%= text_field_tag "keyword_weights[" + k.id.to_s + "]", k.weight, class: "form-control", type: "text", form: "modify_rso" %></td>
                 <% if(@keyword_count == 0) %>
                   <td class="text-danger" width=30%><%= @keyword_count %></td>
                 <% else %>

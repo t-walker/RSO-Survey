@@ -15,12 +15,30 @@ class RsoController < ApplicationController
 
   def modify_rso
     rso = Rso.find(params[:rso_id])
+    flash[:success] = ""
+    flash[:error] = ""
     rso.assign_attributes(name: params[:name], nickname: params[:nickname])
+    params["keyword_weights"].keys.each do |k_id|
+      keyword = Keyword.find(k_id)
+      keyword.assign_attributes(weight: params[:keyword_weights][k_id])
+      if(keyword.valid?)
+        keyword.save
+        flash[:success] += "Keyword updated successfully."
+      else
+        flash[:error] += "Keyword " + keyword.keyword + " not updated: " + keyword.errors.full_messages.join(", ")
+      end
+    end
     if(rso.valid?)
       rso.save!
-      flash[:success] = "RSO updated successfully"
+      flash[:success] = "RSO updated successfully."
     else
-      flash[:error] = "RSO not updated: " + rso.errors.full_messages.join(", ")
+      flash[:error] += "RSO not updated: " + rso.errors.full_messages.join(", ")
+    end
+    if(flash[:error] == "")
+      flash.delete("error")
+    end
+    if(flash[:success] == "")
+      flash.delete("success")
     end
     redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
