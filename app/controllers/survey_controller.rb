@@ -253,24 +253,28 @@ class SurveyController < ApplicationController
 
       # Rank the matches from highest to lowest.
       rso_match_strengths = rso_match_strengths.sort_by{ |rso_id, strength| strength}.reverse
-
+      puts rso_match_strengths.size
       i = 0
       if(rso_match_strengths[i][1] == 0.to_f)
         flash[:results] = "You didn't match with any clubs."
       else
         flash[:results] = "You matched with "
         max_matches = 5
-        while i < max_matches and rso_match_strengths[i][1] > 0
-          if(rso_match_strengths[i + 1][1] == 0.0 or i == max_matches - 1)
-            flash[:results] += " and "
+        while i < max_matches && rso_match_strengths.size > i && rso_match_strengths[i][1] > 0
+          if(rso_match_strengths.size > i + 1)
+            if(rso_match_strengths[i + 1][1] == 0.0 || i == max_matches - 1)
+              flash[:results] += " and "
+            end
           end
           flash[:results] += Rso.find(rso_match_strengths[i][0]).name
           # Uncomment the code below to append the match strength to the results
           #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
-          if(rso_match_strengths[i + 1][1] > 0 and i < max_matches - 1 )
-            flash[:results] += ", "
-          else
-            flash[:results] += "."
+          if(rso_match_strengths.size > i + 1)
+            if(rso_match_strengths[i + 1][1] > 0 && i < max_matches - 1 )
+              flash[:results] += ", "
+            else
+              flash[:results] += "."
+            end
           end
           i += 1
         end
