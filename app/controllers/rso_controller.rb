@@ -68,9 +68,8 @@ class RsoController < ApplicationController
   end
 
   def delete_keyword
-    keyword = Keyword.find(params[:keyword_id])
-    keyword.destroy
-    if(keyword.destroyed?)
+    keyword = Rso.find(params[:rso_id]).keywords.delete(params[:keyword_id])
+    if(Rso.find(params[:rso_id]).keywords.find(params[:keyword_id]))
       flash[:success] = "Keyword deleted successfully"
     else
       flash[:error] = "Keyword not deleted"
