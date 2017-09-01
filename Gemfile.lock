@@ -38,6 +38,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_list (0.9.7)
+      activerecord (>= 3.0)
     arel (7.1.4)
     autoprefixer-rails (7.1.1.2)
       execjs
@@ -167,6 +169,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   bcrypt (~> 3.1.7)
   bootstrap (~> 4.0.0.alpha6)
   byebug
@@ -187,5 +190,8 @@ DEPENDENCIES
   unicorn
   web-console (~> 2.0)
 
+RUBY VERSION
+   ruby 2.2.6p396
+
 BUNDLED WITH
-   1.15.3
+   1.15.4

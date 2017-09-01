@@ -41,6 +41,9 @@ gem "seed_dump"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Handles positions of questions/answers
+gem 'acts_as_list'
+
 # Pinning minitest at this version because of a bug in Rails that causes Travis to fail.
 gem "minitest", "5.10.1"
 
