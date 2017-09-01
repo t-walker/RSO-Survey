@@ -16,14 +16,16 @@ class RsoController < ApplicationController
     flash[:success] = ""
     flash[:error] = ""
     rso.assign_attributes(name: params[:name], nickname: params[:nickname])
-    params["keyword_weights"].keys.each do |k_id|
-      keyword = Keyword.find(k_id)
-      keyword.assign_attributes(weight: params[:keyword_weights][k_id])
-      if(keyword.valid?)
-        keyword.save
-        flash[:success] += "Keyword updated successfully."
-      else
-        flash[:error] += "Keyword " + keyword.keyword + " not updated: " + keyword.errors.full_messages.join(", ")
+    if defined? params["keyword_weights"].keys
+      params["keyword_weights"].keys.each do |k_id|
+        keyword = Keyword.find(k_id)
+        keyword.assign_attributes(weight: params[:keyword_weights][k_id])
+        if(keyword.valid?)
+          keyword.save
+          flash[:success] += "Keyword updated successfully."
+        else
+          flash[:error] += "Keyword " + keyword.keyword + " not updated: " + keyword.errors.full_messages.join(", ")
+        end
       end
     end
     if(rso.valid?)
