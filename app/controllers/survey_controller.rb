@@ -8,6 +8,8 @@ class SurveyController < ApplicationController
   end
 
   def modify_question
+    flash[:success] = ""
+    flash[:error] = ""
     q = Question.find(params[:id])
     newPosition = params[:position].to_i
     oldPosition = q.position
@@ -39,12 +41,85 @@ class SurveyController < ApplicationController
         question.save!
       end
     end
-    q.update(:question_title => params[:question_title], :position => newPosition)
-    if(q.valid?)
-      flash[:success] = "Question updated successfully"
-    else
-      flash[:error] = "Question not updated: " + q.errors.full_messages.join(", ")
+
+    # update answer titles
+    params[:answer_titles].keys.each do |answer_id|
+      answer = Answer.find(answer_id)
+      answer.assign_attributes(answer_title: params[:answer_titles][answer_id])
+      if(answer.changed?)
+        if(answer.valid?)
+          answer.save
+          flash[:success] += "Answer \"" + answer.answer_title + "\" updated successfully. "
+        else
+          flash[:error] += "Answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
+        end
+      end
     end
+
+    # update answer positions
+    params[:answer_positions].keys.each do |answer_id|
+      answer = Answer.find(answer_id)
+      if(answer.position != params[:answer_positions][answer_id].to_i)
+        answer.insert_at(params[:answer_positions][answer_id].to_i)
+        if(answer.changed?)
+          if(answer.valid?)
+            answer.save
+            flash[:success] += "Answer \"" + answer.answer_title + "\" updated successfully. "
+          else
+            flash[:error] += "Answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
+          end
+        end
+      end
+    end
+
+    # update keyword titles
+    params[:keyword_titles].keys.each do |keyword_id|
+      keyword = Keyword.find(keyword_id)
+      keyword.assign_attributes(keyword: params[:keyword_titles][keyword_id])
+      if(keyword.changed?)
+        if(keyword.valid?)
+          keyword.save
+          flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+        else
+          flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+        end
+      end
+    end
+
+    # update keyword weights
+    params[:keyword_weights].keys.each do |keyword_id|
+      keyword = Keyword.find(keyword_id)
+      keyword.assign_attributes(weight: params[:keyword_weights][keyword_id])
+      if(keyword.changed?)
+        if(keyword.valid?)
+          keyword.save
+          flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+        else
+          flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+        end
+      end
+    end
+
+
+
+
+    q.assign_attributes(:question_title => params[:question_title], :position => newPosition)
+    if(q.changed?)
+      if(q.valid?)
+        q.save
+        flash[:success] += "Question updated successfully"
+      else
+        flash[:error] += "Question not updated: " + q.errors.full_messages.join(", ")
+      end
+    end
+
+    if(flash[:error] == "")
+      flash.delete("error")
+    end
+    if(flash[:success] == "")
+      flash.delete("success")
+    end
+
     redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
   end
 
@@ -253,24 +328,28 @@ class SurveyController < ApplicationController
 
       # Rank the matches from highest to lowest.
       rso_match_strengths = rso_match_strengths.sort_by{ |rso_id, strength| strength}.reverse
-
+      puts rso_match_strengths.size
       i = 0
       if(rso_match_strengths[i][1] == 0.to_f)
         flash[:results] = "You didn't match with any clubs."
       else
         flash[:results] = "You matched with "
         max_matches = 5
-        while i < max_matches and rso_match_strengths[i][1] > 0
-          if(rso_match_strengths[i + 1][1] == 0.0 or i == max_matches - 1)
-            flash[:results] += " and "
+        while i < max_matches && rso_match_strengths.size > i && rso_match_strengths[i][1] > 0
+          if(rso_match_strengths.size > i + 1)
+            if(rso_match_strengths[i + 1][1] == 0.0 || i == max_matches - 1)
+              flash[:results] += " and "
+            end
           end
           flash[:results] += Rso.find(rso_match_strengths[i][0]).name
           # Uncomment the code below to append the match strength to the results
           #flash[:results] += " (" + rso_match_strengths[i][1].to_s + ")"
-          if(rso_match_strengths[i + 1][1] > 0 and i < max_matches - 1 )
-            flash[:results] += ", "
-          else
-            flash[:results] += "."
+          if(rso_match_strengths.size > i + 1)
+            if(rso_match_strengths[i + 1][1] > 0 && i < max_matches - 1 )
+              flash[:results] += ", "
+            else
+              flash[:results] += "."
+            end
           end
           i += 1
         end

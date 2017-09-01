@@ -11,6 +11,7 @@ class Question < ApplicationRecord
   validates :answers, :presence => true
   validates :position, :presence => true
   validates :question_title, :presence => true
+  
   validate :answer_limits
   has_many :answers, :dependent => :delete_all
 
