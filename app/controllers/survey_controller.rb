@@ -3,6 +3,12 @@ class SurveyController < ApplicationController
     @questions = Question.order(:position)
   end
 
+  def new
+  end
+
+  def bulk_upload
+  end
+
   def edit_question
     @q = Question.find(params[:id])
   end

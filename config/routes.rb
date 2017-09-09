@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   get '/rsos', to: 'rso#index'
   get '/rsos/manage', to: 'rso#manage'
+  get '/rsos/new', to: 'rso#new'
+  get '/rsos/bulk', to: 'rso#bulk_upload'
+
   get '/rsos/edit/:id', to: 'rso#edit', as: "edit_rso"
   post '/rsos/create_rso', to: 'rso#create_rso'
   post '/rsos/modify_rso', to: 'rso#modify_rso'

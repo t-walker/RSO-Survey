@@ -1,55 +1,19 @@
 <div class="row">
   <div class="col-md-12">
-    <% if flash[:success] %>
-        <div class="alert alert-success"><%= flash[:success] %></div>
-    <% end %>
-    <% if flash[:error] %>
-        <div class="alert alert-danger"><%= flash[:error] %></div>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <h3>Create a new RSO</h3>
-    <%= form_tag({controller: "rso", action: "create_rso"}, method: "post") do %>
-      <div class="form-group row">
-        <%= label_tag :name, "Name:", class: "col-md-2 col-form-label" %>
-        <div class="col-md-5">
-          <%= text_field_tag :name, "", class: "form-control", type: "text" %>
-        </div>
-      </div>
-      <div class="form-group row">
-        <%= label_tag :nickname, "Nickname:", class: "col-md-2 col-form-label" %>
-        <div class="col-md-5">
-          <%= text_field_tag :nickname, "", class: "form-control", type: "text" %>
-        </div>
-      </div>
-      <%= submit_tag "Create RSO", class: "btn btn-success" %>
-    <% end %>
-  </div>
-</div>
-
-
-<hr />
-<div class="row">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <th>Name</th>
-            <th>Nickname</th>
-            <th>Keywords</th>
-            <th></th>
-          </thead>
-          <tbody>
-            <% @rsos.each do |r| %>
-              <%= render partial: "rso", :locals => {:r => r} %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <th>Name</th>
+          <th>Nickname</th>
+          <th>Keywords</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <% @rsos.each do |r| %>
+            <%= render partial: "rso", :locals => {:r => r} %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
