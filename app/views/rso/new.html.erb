@@ -11,21 +11,24 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h3>Create a new RSO</h3>
+    <h3>Register Organization</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
     <%= form_tag({controller: "rso", action: "create_rso"}, method: "post") do %>
-      <div class="form-group row">
-        <%= label_tag :name, "Name:", class: "col-md-2 col-form-label" %>
-        <div class="col-md-5">
-          <%= text_field_tag :name, "", class: "form-control", type: "text" %>
+      <fieldset>
+        <div class="form-group">
+          <%= label_tag :name, "Name" %>
+          <%= text_field_tag :name, "", class: "form-control col-md-4", type: "text" %>
         </div>
-      </div>
-      <div class="form-group row">
-        <%= label_tag :nickname, "Nickname:", class: "col-md-2 col-form-label" %>
-        <div class="col-md-5">
-          <%= text_field_tag :nickname, "", class: "form-control", type: "text" %>
+        <div class="form-group">
+          <%= label_tag :nickname, "Nickname" %>
+          <%= text_field_tag :nickname, "", class: "form-control col-md-4", type: "text" %>
         </div>
-      </div>
-      <%= submit_tag "Create RSO", class: "btn btn-success" %>
+        <%= submit_tag "Create RSO", class: "btn btn-success" %>
+      </fieldset>
     <% end %>
   </div>
 </div>
