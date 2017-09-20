@@ -3,10 +3,7 @@ class SurveyController < ApplicationController
     @questions = Question.order(:position)
   end
 
-  def new
-  end
-
-  def bulk_upload
+  def new_question
   end
 
   def edit_question
