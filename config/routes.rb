@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   post '/survey/manage', to: 'survey#create_question'
   post '/survey/delete_question', to: 'survey#delete_question'
   post '/survey/delete_answer', to: 'survey#delete_answer'
+  post '/survey/create_answer', to: 'survey#create_answer'
   get '/survey/edit_answer/:id', to: 'survey#edit_answer', as: "edit_answer"
   post '/survey/modify_answer', to: 'survey#modify_answer'
   post '/survey/submit', to: 'survey#submit'
