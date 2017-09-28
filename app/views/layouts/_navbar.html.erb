@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,15 +9,16 @@
       <li class="nav-item">
         <a class="nav-link" href="/survey/manage">Manage Survey</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/rsos/manage">Manage RSOs</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/officers/manage">Manage Officers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/manage">Manage Admins</a>
-      </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="/rsos/manage" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Organizations
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" href="/rsos/manage">Manage</a>
+         <a class="dropdown-item" href="/rsos/new">Create</a>
+         <a class="dropdown-item" href="/rsos/bulk">Bulk Upload</a>
+       </div>
+     </li>
     </ul>
     <a class="btn btn-outline-success my-2 my-sm-0" href="/survey">Take the Survey</a>
   </div>

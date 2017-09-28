@@ -4,12 +4,10 @@ class RsoController < ApplicationController
 
   def manage
     @rsos = Rso.order(:name)
-    @officers = Officer.order(:last)
   end
 
   def edit
     @rso = Rso.includes(:keywords).find(params[:id])
-    @officers = Officer.order(:last)
     @keywords = Keyword.uniq.pluck(:keyword).sort!
   end
 
@@ -18,14 +16,16 @@ class RsoController < ApplicationController
     flash[:success] = ""
     flash[:error] = ""
     rso.assign_attributes(name: params[:name], nickname: params[:nickname])
-    params["keyword_weights"].keys.each do |k_id|
-      keyword = Keyword.find(k_id)
-      keyword.assign_attributes(weight: params[:keyword_weights][k_id])
-      if(keyword.valid?)
-        keyword.save
-        flash[:success] += "Keyword updated successfully."
-      else
-        flash[:error] += "Keyword " + keyword.keyword + " not updated: " + keyword.errors.full_messages.join(", ")
+    if defined? params["keyword_weights"].keys
+      params["keyword_weights"].keys.each do |k_id|
+        keyword = Keyword.find(k_id)
+        keyword.assign_attributes(weight: params[:keyword_weights][k_id])
+        if(keyword.valid?)
+          keyword.save
+          flash[:success] += "Keyword updated successfully."
+        else
+          flash[:error] += "Keyword " + keyword.keyword + " not updated: " + keyword.errors.full_messages.join(", ")
+        end
       end
     end
     if(rso.valid?)
@@ -95,30 +95,4 @@ class RsoController < ApplicationController
 
     redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
   end
-
-  def add_officer
-    newOfficer = Officer.find(params[:officer_id])
-    rso = Rso.find(params[:rso_id])
-    begin
-      rso.officers << newOfficer
-      flash[:success] = "Officer added to RSO successfully"
-    rescue ActiveRecord::RecordInvalid => invalid
-      flash[:error] = "Officer not added to RSO: " + invalid.record.errors.full_messages.join(", ")
-    end
-
-    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
-  end
-
-  def delete_officer
-    Rso.find(params[:rso_id]).officers.delete(Officer.find(params[:officer_id]))
-    if(!(Rso.find(params[:rso_id]).officers.where(:id => params[:officer_id]).any?))
-      flash[:success] = "Officer removed from RSO successfully"
-    else
-      flash[:error] = "Officer not removed from RSO"
-    end
-
-    redirect_to controller: 'rso', action: 'edit', id: params[:rso_id]
-  end
-
-
 end
