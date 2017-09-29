@@ -12,6 +12,18 @@
   </div>
 </div>
 
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-md-2">
+      <img class="img-fluid" src="<%= asset_path('coug_logo.png') %>" />
+    </div>
+    <div class="col-md-10">
+      <h1 class="display-3">RSO Survey</h1>
+      <p class="lead">Find out where you belong.</p>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <%= form_tag({controller: "survey", action: "submit"}, method: "post") do %>
