@@ -130,6 +130,11 @@ class SurveyController < ApplicationController
     redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
   end
 
+  def create_answer
+    @answer = Answer.create(question_id: params[:q_id], answer_title: params[:new_answer_title], position: params[:new_answer_position])
+    @answer.save
+    redirect_to controller: 'survey', action: 'edit_question', id: params[:q_id]
+  end
 
   def create_question
     @question = Question.create(question_title: params[:question_title])
@@ -219,7 +224,10 @@ class SurveyController < ApplicationController
   end
 
   def delete_answer
-
+    answer = Answer.find(params[:id])
+    question_id = answer.question_id
+    answer.destroy
+    redirect_to controller: 'survey', action: 'edit_question', id: question_id
   end
 
   def edit_answer

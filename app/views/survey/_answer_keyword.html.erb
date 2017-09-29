@@ -90,5 +90,42 @@
       </div>
     </div>
     <% end %>
+    <div class="col-md-6 d-flex align-items-stretch" style="margin-bottom: 20px;">
+      <div class="card">
+        <%= form_tag({controller: "survey", action: "create_answer"}, method: "post", id: "create_answer") do %>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  
+                  <div class="row">
+                    <%= label_tag "new_answer_title", "Answer: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
+                    <div class="col-lg-10">
+                      <%= text_field_tag "new_answer_title", "", class: "form-control", type: "text", form: "create_answer" %>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <%= label_tag "new_answer_position", "Position: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
+                    <div class="col-lg-10">
+                      <%= text_field_tag "new_answer_position", "", class: "form-control", type: "number", form: "create_answer"%>
+                    </div>
+                  </div>
+                </div>
+                <%= hidden_field_tag(:q_id, q.id) %>
+              </div>
+            </div>
+            <div class="btn-group">
+              <%= button_tag(type: "submit", class: "btn btn-success pull-right", form: "create_answer") do %>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
