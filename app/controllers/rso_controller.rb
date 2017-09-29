@@ -11,6 +11,9 @@ class RsoController < ApplicationController
     @keywords = Keyword.uniq.pluck(:keyword).sort!
   end
 
+  def bulk_upload
+  end
+
   def modify_rso
     rso = Rso.find(params[:rso_id])
     flash[:success] = ""

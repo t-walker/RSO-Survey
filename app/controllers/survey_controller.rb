@@ -3,10 +3,7 @@ class SurveyController < ApplicationController
     @questions = Question.order(:position)
   end
 
-  def new
-  end
-
-  def bulk_upload
+  def new_question
   end
 
   def edit_question
@@ -79,29 +76,33 @@ class SurveyController < ApplicationController
     end
 
     # update keyword titles
-    params[:keyword_titles].keys.each do |keyword_id|
-      keyword = Keyword.find(keyword_id)
-      keyword.assign_attributes(keyword: params[:keyword_titles][keyword_id])
-      if(keyword.changed?)
-        if(keyword.valid?)
-          keyword.save
-          flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
-        else
-          flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+    if params[:keyword_titles]
+      params[:keyword_titles].keys.each do |keyword_id|
+        keyword = Keyword.find(keyword_id)
+        keyword.assign_attributes(keyword: params[:keyword_titles][keyword_id])
+        if(keyword.changed?)
+          if(keyword.valid?)
+            keyword.save
+            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+          else
+            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+          end
         end
       end
     end
 
     # update keyword weights
-    params[:keyword_weights].keys.each do |keyword_id|
-      keyword = Keyword.find(keyword_id)
-      keyword.assign_attributes(weight: params[:keyword_weights][keyword_id])
-      if(keyword.changed?)
-        if(keyword.valid?)
-          keyword.save
-          flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
-        else
-          flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+    if params[:keyword_titles]
+      params[:keyword_weights].keys.each do |keyword_id|
+        keyword = Keyword.find(keyword_id)
+        keyword.assign_attributes(weight: params[:keyword_weights][keyword_id])
+        if(keyword.changed?)
+          if(keyword.valid?)
+            keyword.save
+            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+          else
+            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+          end
         end
       end
     end

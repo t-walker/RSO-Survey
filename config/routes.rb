@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#index'
   get '/survey', to: 'survey#index'
   get '/survey/manage', to: 'survey#manage'
+  get '/survey/add_question', to: 'survey#new_question'
   get '/survey/question/:id', to: 'survey#edit_question', as: "edit_question"
   put '/survey/modify_question/:id', to: 'survey#modify_question'
   post '/survey/manage', to: 'survey#create_question'
@@ -39,6 +40,6 @@ Rails.application.routes.draw do
   post '/survey/edit_keyword', to: 'survey#edit_keyword'
   post '/survey/delete_keyword', to: 'survey#delete_keyword'
 
-  root 'home#index'
+  root 'survey#index'
 
 end

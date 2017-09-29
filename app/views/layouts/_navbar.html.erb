@@ -6,9 +6,15 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/survey/manage">Manage Survey</a>
-      </li>
+      <li class="nav-item dropdown">
+       <a class="nav-link dropdown-toggle" href="/rsos/manage" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Survey
+       </a>
+       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+         <a class="dropdown-item" href="/survey/manage">Manage</a>
+         <a class="dropdown-item" href="/survey/add_question">Add Question</a>
+       </div>
+     </li>
       <li class="nav-item dropdown">
        <a class="nav-link dropdown-toggle" href="/rsos/manage" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Organizations

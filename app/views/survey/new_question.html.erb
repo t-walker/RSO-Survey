@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-12">
+    <h3>Create a question</h3>
+
+    <%= form_tag({controller: "survey", action: "create_question"}, method: "post") do %>
+      <div class="form-group row">
+        <%= label_tag :question_title, "Enter a question", class: "col-2 col-form-label" %>
+        <div class="col-5">
+          <%= text_field_tag :question_title, "", class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :answer1, "Answer 1:", class: "col-2 col-form-label" %>
+        <div class="col-5">
+          <%= text_field_tag :answer1, "", class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :answer2, "Answer 2:", class: "col-2 col-form-label" %>
+        <div class="col-5">
+          <%= text_field_tag :answer2, "", class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :answer3, "Answer 3:", class: "col-2 col-form-label" %>
+        <div class="col-5">
+          <%= text_field_tag :answer3, "", class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :answer4, "Answer 4:", class: "col-2 col-form-label" %>
+        <div class="col-5">
+          <%= text_field_tag :answer4, "", class: "form-control", type: "text" %>
+        </div>
+      </div>
+      <div class="form-group row">
+        <%= label_tag :position, "Position: ", class: "col-2 col-form-label"%>
+        <div class="col-5">
+          <%= text_field_tag :position, nil, class: "form-control", type: "number" %>
+        </div>
+      </div>
+      <%= submit_tag "Create Question", class: "btn btn-success" %>
+    <% end %>
+  </div>
+</div>
