@@ -1,4 +1,6 @@
-<div class="card text-center" style="display: inline-block">
+<div class="card text-center mt-sm-3" style="display: inline-block; margin-top: 10px;">
+  <div class="card-header">
+  </div>
   <div class="card-block">
       <h4 class="card-title"><%= questionTitle %></h4>
       <div class="btn-group-vertical" data-toggle="buttons">
@@ -6,5 +8,7 @@
             <%= render partial: 'question-answer', :locals => {:answer => a, :question_id => qid, :answerTitle => a.answer_title, :answerIndex => aindex} %>
         <% end %>
     </div>
+  </div>
+  <div class="card-footer">
   </div>
 </div>

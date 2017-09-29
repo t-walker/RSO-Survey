@@ -31,6 +31,34 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,700" !defaul
 
 // Buttons =====================================================================
 
+.btn-primary {
+  &:hover,
+  &:focus,
+  &.focus {
+    color: $white;
+    background-color: #383f43;
+    border-color: #383f43;
+
+  }
+
+  &:active,
+  &.active,
+  &.disabled,
+  &:disabled {
+    color: $white;
+    background-color: #383f43;
+    border-color: #383f43;
+
+
+    &:focus,
+    &.focus {
+      color: $white;
+      background-color: #383f43;
+      border-color: #383f43;
+
+    }
+  }
+}
 // Typography ==================================================================
 
 // Tables ======================================================================

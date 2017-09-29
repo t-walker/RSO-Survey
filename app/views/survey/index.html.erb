@@ -15,7 +15,7 @@
 <div class="row">
   <div class="col-md-12">
     <%= form_tag({controller: "survey", action: "submit"}, method: "post") do %>
-      <div class="card-columns d-flex h100">
+      <div class="card-columns h100">
         <% @questions.each do |q| %>
           <%= render partial: 'question', :locals => {:position => q.position, :qid => q.id, :questionTitle => q.question_title, :answers => q.answers} %>
         <% end %>
