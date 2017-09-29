@@ -1,6 +1,10 @@
 class SurveyController < ApplicationController
+  layout "admin"
+  
   def index
     @questions = Question.order(:position)
+
+    render layout: "survey"
   end
 
   def new_question
