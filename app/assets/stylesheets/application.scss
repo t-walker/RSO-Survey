@@ -11,10 +11,46 @@
  * file per style scope.
  *
  */
+
+@import url('https://fonts.googleapis.com/css?family=Patua+One');
+
 @import "variables";
 @import "bootstrap";
 @import "bootswatch";
 @import "font-awesome";
+
+.crimson-gradient {
+  background-image: linear-gradient(darken($brand-primary, 5%), darken($brand-primary, 11%));
+}
+
+.answer-gradient {
+  background: linear-gradient($brand-primary, darken($brand-primary, 10%));
+  border: none;
+
+  &:hover,
+  &:focus,
+  &.focus {
+    color: $white;
+    background: linear-gradient(darken($brand-primary, 5%), darken($brand-primary, 10%));
+    border: none;
+  }
+
+  &:active,
+  &.active,
+  &.disabled,
+  &:disabled {
+    color: $white;
+    background: linear-gradient($gray-light, darken($gray-light, 10%));
+    border: none;
+
+    &:focus,
+    &.focus {
+      color: $white;
+      background-color: #383f43;
+      border: none
+    }
+  }
+}
 
 .card-columns {
   @include media-breakpoint-only(xl) {

@@ -37,8 +37,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,700" !defaul
   &.focus {
     color: $white;
     background-color: #383f43;
-    border-color: #383f43;
-
   }
 
   &:active,
@@ -47,15 +45,11 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,700" !defaul
   &:disabled {
     color: $white;
     background-color: #383f43;
-    border-color: #383f43;
-
 
     &:focus,
     &.focus {
       color: $white;
       background-color: #383f43;
-      border-color: #383f43;
-
     }
   }
 }
