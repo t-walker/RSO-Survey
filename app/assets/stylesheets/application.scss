@@ -11,10 +11,18 @@
  * file per style scope.
  *
  */
+
+@import url('https://fonts.googleapis.com/css?family=Patua+One');
+
 @import "variables";
 @import "bootstrap";
 @import "bootswatch";
 @import "font-awesome";
+
+.crimson-gradient {
+  background-image: linear-gradient($brand-primary, darken($brand-primary, 20%));
+
+}
 
 .card-columns {
   @include media-breakpoint-only(xl) {
