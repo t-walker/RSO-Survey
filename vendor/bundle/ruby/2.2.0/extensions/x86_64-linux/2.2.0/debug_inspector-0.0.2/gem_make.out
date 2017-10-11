@@ -1,0 +1,11 @@
+/usr/share/rvm/rubies/ruby-2.2.6/bin/ruby -r ./siteconf20170723-21917-34qcmx.rb extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+make "DESTDIR=" install
+/usr/bin/install -m 0755 debug_inspector.so ./.gem.20170723-21917-p6ip4a
