@@ -1,5 +1,12 @@
 <div class="row">
   <div class="col-md-12">
+    <h3>Registered Organizations</h3>
+    <p>These are the organizations currently registered for matching.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
     <% if flash[:success] %>
         <div class="alert alert-success"><%= flash[:success] %></div>
     <% end %>
@@ -9,37 +16,22 @@
   </div>
 </div>
 
+
 <div class="row">
   <div class="col-md-12">
-    <h3>Create a new RSO</h3>
-    <%= form_tag({controller: "rso", action: "create_rso"}, method: "post") do %>
-      <div class="form-group row">
-        <%= label_tag :name, "Name:", class: "col-2 col-form-label" %>
-        <div class="col-5">
-          <%= text_field_tag :name, "", class: "form-control", type: "text" %>
-        </div>
-      </div>
-      <div class="form-group row">
-        <%= label_tag :nickname, "Nickname:", class: "col-2 col-form-label" %>
-        <div class="col-5">
-          <%= text_field_tag :nickname, "", class: "form-control", type: "text" %>
-        </div>
-      </div>
-      <%= submit_tag "Create RSO", class: "btn btn-success" %>
-    <% end %>
-  </div>
-</div>
-
-
-<hr />
-<div class="row">
-  <div class="col-md-12">
-    <div class="row">
-      <div class="card-deck">
-        <% @rsos.each do |r| %>
-          <%= render partial: "rso", :locals => {:r => r} %>
-        <% end %>
-      </div>
-    </div>
+      <table class="table">
+        <thead class="table-danger">
+          <th width=30%>Name</th>
+          <th width=30%>Nickname</th>
+          <th width=30%>Website</th>
+          <th width=5%>Keywords</th>
+          <th width=5%></th>
+        </thead>
+        <tbody class="table-striped table-hover">
+          <% @rsos.each do |r| %>
+            <%= render partial: "rso", :locals => {:r => r} %>
+          <% end %>
+        </tbody>
+      </table>
   </div>
 </div>

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <% if flash[:success] %>
+        <div class="alert alert-success"><%= flash[:success] %></div>
+    <% end %>
+    <% if flash[:error] %>
+        <div class="alert alert-danger"><%= flash[:error] %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Register an Organization</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag({controller: "rso", action: "create_rso"}, method: "post") do %>
+      <fieldset>
+        <div class="form-group">
+          <%= label_tag :name, "Name" %>
+          <%= text_field_tag :name, "", class: "form-control col-md-4", type: "text" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :nickname, "Nickname" %>
+          <%= text_field_tag :nickname, "", class: "form-control col-md-4", type: "text" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :website, "Website" %>
+          <%= text_field_tag :website, "", class: "form-control col-md-4", type: "text" %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :description, "Description" %>
+          <%= text_area_tag :description, "", class: "form-control col-md-4", type: "text" %>
+        </div>
+        <%= submit_tag "Create RSO", class: "btn btn-success" %>
+      </fieldset>
+    <% end %>
+  </div>
+</div>

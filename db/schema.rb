@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802024044) do
+ActiveRecord::Schema.define(version: 20170901222742) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.string   "answer_title"
@@ -32,23 +35,7 @@ ActiveRecord::Schema.define(version: 20170802024044) do
   create_table "keywords_rsos", id: false, force: :cascade do |t|
     t.integer "keyword_id", null: false
     t.integer "rso_id",     null: false
-    t.index ["keyword_id", "rso_id"], name: "index_keywords_rsos_on_keyword_id_and_rso_id"
-  end
-
-  create_table "officer_rsos", force: :cascade do |t|
-    t.integer "officer_id"
-    t.integer "rso_id"
-    t.index ["officer_id"], name: "index_officer_rsos_on_officer_id"
-    t.index ["rso_id"], name: "index_officer_rsos_on_rso_id"
-  end
-
-  create_table "officers", force: :cascade do |t|
-    t.string   "first"
-    t.string   "last"
-    t.string   "email"
-    t.string   "phone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["keyword_id", "rso_id"], name: "index_keywords_rsos_on_keyword_id_and_rso_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -56,7 +43,6 @@ ActiveRecord::Schema.define(version: 20170802024044) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "position"
-    t.index ["position"], name: "index_questions_on_position", unique: true
   end
 
   create_table "responses", force: :cascade do |t|
@@ -64,11 +50,22 @@ ActiveRecord::Schema.define(version: 20170802024044) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rso_keywords", force: :cascade do |t|
+    t.integer "rso_id"
+    t.integer "keyword_id"
+    t.index ["keyword_id"], name: "index_rso_keywords_on_keyword_id", using: :btree
+    t.index ["rso_id"], name: "index_rso_keywords_on_rso_id", using: :btree
+  end
+
   create_table "rsos", force: :cascade do |t|
     t.string   "name"
     t.string   "nickname"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "description"
+    t.string   "website"
   end
 
+  add_foreign_key "rso_keywords", "keywords"
+  add_foreign_key "rso_keywords", "rsos"
 end

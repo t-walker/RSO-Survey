@@ -1,11 +1,41 @@
 <div class="row">
   <div class="card-deck">
-    <% q.answers.each do |a| %>
+    <% q.answers.sort_by{ |position| }.reverse.each do |a| %>
+    <div class="col-md-6 d-flex align-items-stretch" style="margin-bottom: 20px;">
       <div class="card">
         <div class="card-header">
-          <h4><%= a.answer_title %></h4>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <div class="row">
+                  <%= label_tag "answer_titles[" + a.id.to_s + "]", "Answer: ", class: "col-lg-2 col-form-label", form: "modify_question" %>
+                  <div class="col-lg-10">
+                    <%= text_field_tag "answer_titles[" + a.id.to_s + "]", a.answer_title, class: "form-control", type: "text", form: "modify_question" %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <%= label_tag "answer_positions[" + a.id.to_s + "]", "Position: ", class: "col-lg-2 col-form-label", form: "modify_question" %>
+                  <div class="col-lg-10">
+                    <%= text_field_tag "answer_positions[" + a.id.to_s + "]", a.position, class: "form-control", type: "number", form: "modify_question"%>
+                  </div>
+                </div>
+              </div>
+              <%= form_tag({controller: "survey", action: "delete_answer"}, method: "post", id: "delete_answer") do %>
+                <%= hidden_field_tag(:id, a.id) %>
+              <% end %>
+            </div>
+          </div>
+          <div class="btn-group">
+            <%= button_tag(type: "submit", class: "btn btn-danger pull-right", form: "delete_answer") do %>
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+              Delete
+            <% end %>
+          </div>
         </div>
         <div class="card-block">
+          <div class="table-responsive">
             <table class="table">
               <thead>
                 <th>Keyword</th>
@@ -13,36 +43,89 @@
                 <th></th>
               </thead>
               <% if a.keywords.count > 0 %>
-
-              <% a.keywords.each do |k| %>
-                <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post") do %>
-                <%= hidden_field_tag(:keyword_id, k.id) %>
+                <% a.keywords.each do |k| %>
                   <tr>
-                    <td style="width: 45%"><%= k.keyword %></td>
-                    <td style="width: 45%"><%= text_field_tag :weight, k.weight, type: "number", class: "form-control" %></td>
-                    <td style="width: 10%"><%= submit_tag "Delete", class: "btn btn-danger float-right" %></td>
+                    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post", id: "delete_keyword" + k.id.to_s) do %>
+                      <%= hidden_field_tag(:keyword_id, k.id) %>
+                      <%= hidden_field_tag(:question_id, q.id) %>
+                    <% end %>
+                    <td style="width: 45%"><%= text_field_tag "keyword_titles[" + k.id.to_s + "]", k.keyword, type: "text", class: "form-control", form: "modify_question" %></td>
+                    <td style="width: 45%"><%= text_field_tag "keyword_weights[" + k.id.to_s + "]", k.weight, type: "number", class: "form-control", form: "modify_question" %></td>
+                    <td style="width: 10%">
+                      <div class="btn-group">
+                        <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_keyword" + k.id.to_s) do %>
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <% end %>
+                      </div>
+                    </td>
                   </tr>
-                  <% end %>
                 <% end %>
               <% end %>
             </table>
+          </div>
         </div>
-          <br />
-          <div class="card-footer">
-            <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
-              <%= hidden_field_tag(:answer_id, a.id) %>
+        <br />
+        <div class="card-footer">
+          <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
+            <%= hidden_field_tag(:answer_id, a.id) %>
+            <%= hidden_field_tag(:question_id, q.id) %>
+            <div class="table-responsive">
               <table class="table">
                 <tbody>
                   <tr>
                     <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control" %></td>
                     <td style="width: 45%"><%= text_field_tag :weight, "", type: "number", class: "form-control" %></td>
-                    <td style="width: 10%"><%= submit_tag "Create", class: "btn btn-success float-right" %></td>
+                    <td style="width: 10%">
+                      <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      <% end %>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
+
+        </div>
       </div>
+    </div>
     <% end %>
+    <div class="col-md-6 d-flex align-items-stretch" style="margin-bottom: 20px;">
+      <div class="card">
+        <%= form_tag({controller: "survey", action: "create_answer"}, method: "post", id: "create_answer") do %>
+          <div class="card-header">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  
+                  <div class="row">
+                    <%= label_tag "new_answer_title", "Answer: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
+                    <div class="col-lg-10">
+                      <%= text_field_tag "new_answer_title", "", class: "form-control", type: "text", form: "create_answer" %>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <%= label_tag "new_answer_position", "Position: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
+                    <div class="col-lg-10">
+                      <%= text_field_tag "new_answer_position", "", class: "form-control", type: "number", form: "create_answer"%>
+                    </div>
+                  </div>
+                </div>
+                <%= hidden_field_tag(:q_id, q.id) %>
+              </div>
+            </div>
+            <div class="btn-group">
+              <%= button_tag(type: "submit", class: "btn btn-success pull-right", form: "create_answer") do %>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
