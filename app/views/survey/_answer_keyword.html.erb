@@ -50,7 +50,16 @@
                       <%= hidden_field_tag(:question_id, q.id) %>
                     <% end %>
                     <td style="width: 45%"><%= text_field_tag "keyword_titles[" + k.id.to_s + "]", k.keyword, type: "text", class: "form-control", form: "modify_question" %></td>
-                    <td style="width: 45%"><%= text_field_tag "keyword_weights[" + k.id.to_s + "]", k.weight, type: "number", class: "form-control", form: "modify_question" %></td>
+                    <td style="width: 45%">
+                      <div class="btn-group" data-toggle="buttons">
+                        <% (1..5).each do |num| %>
+                          <label class="btn btn-primary answer-gradient">
+                            <%= radio_button_tag "keyword_weights[" + k.id.to_s + "]", num, form: "modify_question"%>
+                            <%= num %>
+                          </label>
+                        <% end %>
+                      </div>
+                    </td>
                     <td style="width: 10%">
                       <div class="btn-group">
                         <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_keyword" + k.id.to_s) do %>
@@ -74,7 +83,14 @@
                 <tbody>
                   <tr>
                     <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control" %></td>
-                    <td style="width: 45%"><%= text_field_tag :weight, "", type: "number", class: "form-control" %></td>
+                    <td style="width: 45%", data-toggle="buttons" class="btn-group">
+                      <% (1..5).each do |num| %>
+                        <label class="btn btn-primary answer-gradient">
+                          <%= radio_button_tag :weight, num %>
+                          <%= num %>
+                        </label>
+                      <% end %>
+                    </td>
                     <td style="width: 10%">
                       <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
                         <i class="fa fa-plus" aria-hidden="true"></i>
