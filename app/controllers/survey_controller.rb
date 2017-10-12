@@ -14,17 +14,15 @@ class SurveyController < ApplicationController
   end
 
   # Doesn't return anything, also doesn't redirect when done
-  def self.modify_question_position(question, new_position)
-    old_position = q.position
+  def modify_question_position(question, new_position)
+    old_position = question.position
     if(new_position != nil && new_position != old_position)
       last_position = Question.all.order(position: :desc).first.position
       # If the position submitted by the user is greater than the last position in the survey,
       # just make the question the last one in the survey.
       questions_between = []
-      if(new_position > last_position
-)
+      if(new_position > last_position)
         new_position = last_position
-
         questions_between = Question.where("position >= ?", old_position).order(position: :desc)
         questions_between.each do |q|
           q.position -= 1
@@ -49,7 +47,7 @@ class SurveyController < ApplicationController
     return "", ""
   end
 
-  def self.update_answer_titles(answer_titles)
+  def update_answer_titles(answer_titles)
     flash[:success] = ""
     flash[:error] = ""
     answer_titles.keys.each do |answer_id|
@@ -64,28 +62,18 @@ class SurveyController < ApplicationController
         end
       end
     end
+    
     return flash[:success], flash[:error]
   end
 
-  # directs button clicks on the edit_question page to their appropriate places
-  def modify_question
+
+  def update_answer_positions(answer_positions)
     flash[:success] = ""
     flash[:error] = ""
-    q = Question.find(params[:id])
-    new_position = params[:position].to_i
-    self.modify_question_position(q, new_position)
-    # update answer titles
-    success, error = self.update_answer_titles(params[:answer_titles])
-    flash[:success] += success
-    flash[:error] += error
-    
-    
-
-    # update answer positions
-    params[:answer_positions].keys.each do |answer_id|
+    answer_positions.keys.each do |answer_id|
       answer = Answer.find(answer_id)
-      if(answer.position != params[:answer_positions][answer_id].to_i)
-        answer.insert_at(params[:answer_positions][answer_id].to_i)
+      if(answer.position != answer_positions[answer_id].to_i)
+        answer.insert_at(answer_positions[answer_id].to_i)
         if(answer.changed?)
           if(answer.valid?)
             answer.save
@@ -96,41 +84,76 @@ class SurveyController < ApplicationController
         end
       end
     end
+    return flash[:success], flash[:error]
+  end
+
+  def update_keyword_titles(keyword_titles)
+    flash[:success] = ""
+    flash[:error] = ""
+    if keyword_titles
+      keyword_titles.keys.each do |keyword_id|
+        keyword = Keyword.find(keyword_id)
+        keyword.assign_attributes(keyword: keyword_titles[keyword_id])
+        if(keyword.changed?)
+          if(keyword.valid?)
+            keyword.save
+            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+          else
+            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+          end
+        end
+      end
+    end
+    return flash[:success], flash[:error]
+  end
+
+  def update_keyword_weights(keyword_weights)
+    flash[:success] = ""
+    flash[:error] = ""
+    if keyword_weights
+      keyword_weights.keys.each do |keyword_id|
+        keyword = Keyword.find(keyword_id)
+        keyword.assign_attributes(weight: keyword_weights[keyword_id])
+        if(keyword.changed?)
+          if(keyword.valid?)
+            keyword.save
+            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+          else
+            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+          end
+        end
+      end
+    end
+    return flash[:success], flash[:error]
+  end
+
+
+  def update_question_button(params)
+    flash[:success] = ""
+    flash[:error] = ""
+    q = Question.find(params[:id])
+    new_position = params[:position].to_i
+    modify_question_position(q, new_position)
+    # update answer titles
+    success, error = update_answer_titles(params[:answer_titles])
+    flash[:success] += success
+    puts("Flash success right after update_answer_titles_called = " + flash[:success])
+    flash[:error] += error
+    
+    # update answer positions
+    success, error = update_answer_positions(params[:answer_positions])
+    flash[:success] += success
+    flash[:error] += error
 
     # update keyword titles
-    if params[:keyword_titles]
-      params[:keyword_titles].keys.each do |keyword_id|
-        keyword = Keyword.find(keyword_id)
-        keyword.assign_attributes(keyword: params[:keyword_titles][keyword_id])
-        if(keyword.changed?)
-          if(keyword.valid?)
-            keyword.save
-            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
-          else
-            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
-          end
-        end
-      end
-    end
+    success, error = update_keyword_titles(params[:keyword_titles])
+    flash[:success] += success
+    flash[:error] += error
 
     # update keyword weights
-    if params[:keyword_weights]
-      params[:keyword_weights].keys.each do |keyword_id|
-        keyword = Keyword.find(keyword_id)
-        keyword.assign_attributes(weight: params[:keyword_weights][keyword_id])
-        if(keyword.changed?)
-          if(keyword.valid?)
-            keyword.save
-            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
-          else
-            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
-          end
-        end
-      end
-    end
-
-
-
+    success, error = update_keyword_weights(params[:keyword_weights])
+    flash[:success] += success
+    flash[:error] += error
 
     q.assign_attributes(:question_title => params[:question_title], :position => new_position)
     if(q.changed?)
@@ -141,21 +164,97 @@ class SurveyController < ApplicationController
         flash[:error] += "Question not updated: " + q.errors.full_messages.join(", ")
       end
     end
-
-    if(flash[:error] == "")
-      flash.delete("error")
+    puts("Flash success at end of update_question_button = " + flash[:success])
+    return flash[:success], flash[:error]
+  end
+  
+  # directs button clicks on the edit_question page to their appropriate places
+  def modify_question
+    flash[:success] = ""
+    flash[:error] = ""
+    if(params[:update_question])
+      success, error = update_question_button(params)
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
+    elsif(params[:delete_question])
+      success, error = delete_question_button(params)
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to action: "manage"
+    elsif(params[:delete_keyword])
+      success, error = delete_keyword_button(params[:delete_keyword])
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
+    elsif(params[:add_keyword])
+      success, error = add_keyword_button(params)
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
+    elsif(params[:add_answer])
+      success, error = add_answer_button(params)
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
+    elsif(params[:delete_answer])
+      success, error = delete_answer_button(params[:delete_answer])
+      flash[:success] = success
+      flash[:error] = error
+      if(flash[:error] == "")
+        flash.delete("error")
+      end
+      if(flash[:success] == "")
+        flash.delete("success")
+      end
+      redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
     end
-    if(flash[:success] == "")
-      flash.delete("success")
-    end
+    
 
-    redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
+    
   end
 
-  def create_answer
-    @answer = Answer.create(question_id: params[:q_id], answer_title: params[:new_answer_title], position: params[:new_answer_position])
-    @answer.save
-    redirect_to controller: 'survey', action: 'edit_question', id: params[:q_id]
+  def add_answer_button(params)
+    flash[:success] = ""
+    flash[:error] = ""
+    @answer = Answer.create(question_id: params[:id], answer_title: params[:new_answer_title], position: params[:new_answer_position])
+    if(@answer.valid?)
+      @answer.save
+      flash[:success] = "Answer created successfully"
+    else
+      flash[:error] = "Answer not created: " + @answer.errors.full_messages.join(", ")
+    end
+    return flash[:success], flash[:error]
   end
 
   def create_question
@@ -170,10 +269,8 @@ class SurveyController < ApplicationController
     else
       # If the position submitted by the user is greater than the last position in the survey,
       # just make the question the last one in the survey.
-      if(params[:position].to_i > last_position
-)
-        @question.position = last_position
- + 1
+      if(params[:position].to_i > last_position)
+        @question.position = last_position + 1
       else
         @questionsAfter = Question.where("position >= ?", params[:position].to_i).order(position: :desc)
         @questionsAfter.each do |q|
@@ -221,14 +318,18 @@ class SurveyController < ApplicationController
     @questions = Question.order(:position)
   end
 
-  def self.add_keyword(answer_id, keyword, weight)
-    answer = Answer.find(params[:answer_id])
-    answer.keywords.create(keyword: params[:keyword], weight: params[:weight])
+  def add_keyword_button(params)
+    flash[:success] = ""
+    flash[:error] = ""
+    answer = Answer.find(params[:add_keyword])
+    answer.keywords.create(keyword: params[:new_keyword_title][params[:add_keyword]], weight: params[:new_keyword_weight][params[:add_keyword]])
     flash[:success] = "Keyword added successfully!"
-    redirect_to controller: 'survey', action: 'edit_question', id: params[:question_id]
+    return flash[:success], flash[:error]
   end
 
-  def delete_question
+  def delete_question_button(params)
+    flash[:success] = ""
+    flash[:error] = ""
     question = Question.find(params[:id])
     @questionsAfter = Question.where("position >= ?", question.position).order(position: :desc)
     @questionsAfter.each do |q|
@@ -244,14 +345,21 @@ class SurveyController < ApplicationController
     else
       flash[:error] = "Question not deleted successfully: " + question.errors.full_messages.join(", ")
     end
-    redirect_to action: "manage"
+    return flash[:success], flash[:error]
   end
 
-  def delete_answer
+  def delete_answer_button(params)
+    flash[:success] = ""
+    flash[:error] = ""
     answer = Answer.find(params[:id])
     question_id = answer.question_id
     answer.destroy
-    redirect_to controller: 'survey', action: 'edit_question', id: question_id
+    if(answer.destroyed?)
+      flash[:success] = "Answer deleted successfully"
+    else
+      flash[:error] = "Answer not deleted: " + answer.erros.full_messages.join(", ")
+    end
+    return flash[:success], flash[:error]
   end
 
   def edit_answer
@@ -312,16 +420,17 @@ class SurveyController < ApplicationController
     redirect_to controller: 'survey', action: 'edit_question', id: params[:question_id]
   end
 
-  def delete_keyword
-    keyword = Keyword.find(params[:keyword_id])
+  def delete_keyword_button(id)
+    flash[:success] = ""
+    flash[:error] = ""
+    keyword = Keyword.find(id)
     keyword.destroy
     if(keyword.destroyed?)
       flash[:success] = "Keyword deleted successfully!"
     else
       flash[:error] = "Keyword not deleted: " + keyword.errors.full_messages.join(", ")
     end
-
-    redirect_to controller: 'survey', action: 'edit_question', id: params[:question_id]
+    return flash[:success], flash[:error]
   end
 
   def submit
