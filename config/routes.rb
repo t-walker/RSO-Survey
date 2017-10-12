@@ -28,10 +28,10 @@ Rails.application.routes.draw do
   get '/survey/manage', to: 'survey#manage'
   get '/survey/add_question', to: 'survey#new_question'
   get '/survey/question/:id', to: 'survey#edit_question', as: "edit_question"
-  put '/survey/modify_question/:id', to: 'survey#modify_question'
+  patch '/survey/modify_question/:id', to: 'survey#modify_question'
   post '/survey/manage', to: 'survey#create_question'
-  post '/survey/delete_question', to: 'survey#delete_question'
-  post '/survey/delete_answer', to: 'survey#delete_answer'
+  delete '/survey/delete_question', to: 'survey#delete_question', as: "delete_question"
+  delete '/survey/delete_answer', to: 'survey#delete_answer', as: "delete_answer"
   post '/survey/create_answer', to: 'survey#create_answer'
   get '/survey/edit_answer/:id', to: 'survey#edit_answer', as: "edit_answer"
   post '/survey/modify_answer', to: 'survey#modify_answer'
