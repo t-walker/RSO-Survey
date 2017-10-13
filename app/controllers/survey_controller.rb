@@ -48,28 +48,24 @@ class SurveyController < ApplicationController
   end
 
   def update_answer_titles(answer_titles)
-    flash[:success] = ""
-    flash[:error] = ""
     answer_titles.keys.each do |answer_id|
       answer = Answer.find(answer_id)
+      puts("Ran update titles for " + answer.answer_title)
       answer.assign_attributes(answer_title: answer_titles[answer_id])
       if(answer.changed?)
         if(answer.valid?)
           answer.save
-          flash[:success] += "Answer \"" + answer.answer_title + "\" updated successfully. "
+          flash[:success] += "Title of answer \"" + answer.answer_title + "\" updated successfully. "
         else
-          flash[:error] += "Answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
+          flash[:error] += "Title of answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
         end
       end
     end
     
-    return flash[:success], flash[:error]
   end
 
 
   def update_answer_positions(answer_positions)
-    flash[:success] = ""
-    flash[:error] = ""
     answer_positions.keys.each do |answer_id|
       answer = Answer.find(answer_id)
       if(answer.position != answer_positions[answer_id].to_i)
@@ -77,19 +73,16 @@ class SurveyController < ApplicationController
         if(answer.changed?)
           if(answer.valid?)
             answer.save
-            flash[:success] += "Answer \"" + answer.answer_title + "\" updated successfully. "
+            flash[:success] += "Position of answer \"" + answer.answer_title + "\" updated successfully. "
           else
-            flash[:error] += "Answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
+            flash[:error] += "Position of answer \"" + answer.answer_title + "\" not updated successfully: " + answer.errors.full_messages.join(", ")
           end
         end
       end
     end
-    return flash[:success], flash[:error]
   end
 
   def update_keyword_titles(keyword_titles)
-    flash[:success] = ""
-    flash[:error] = ""
     if keyword_titles
       keyword_titles.keys.each do |keyword_id|
         keyword = Keyword.find(keyword_id)
@@ -97,19 +90,16 @@ class SurveyController < ApplicationController
         if(keyword.changed?)
           if(keyword.valid?)
             keyword.save
-            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+            flash[:success] += "Title of keyword \"" + keyword.keyword + "\" updated successfully. "
           else
-            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+            flash[:error] += "Title of keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
           end
         end
       end
     end
-    return flash[:success], flash[:error]
   end
 
   def update_keyword_weights(keyword_weights)
-    flash[:success] = ""
-    flash[:error] = ""
     if keyword_weights
       keyword_weights.keys.each do |keyword_id|
         keyword = Keyword.find(keyword_id)
@@ -117,44 +107,30 @@ class SurveyController < ApplicationController
         if(keyword.changed?)
           if(keyword.valid?)
             keyword.save
-            flash[:success] += "Keyword \"" + keyword.keyword + "\" updated successfully. "
+            flash[:success] += "Weight of keyword \"" + keyword.keyword + "\" updated successfully. "
           else
-            flash[:error] += "Keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
+            flash[:error] += "Weight of keyword \"" + keyword.keyword + "\" not updated successfully: " + keyword.errors.full_messages.join(", ")
           end
         end
       end
     end
-    return flash[:success], flash[:error]
   end
 
 
   def update_question_button(params)
-    flash[:success] = ""
-    flash[:error] = ""
     q = Question.find(params[:id])
     new_position = params[:position].to_i
     modify_question_position(q, new_position)
     # update answer titles
-    success, error = update_answer_titles(params[:answer_titles])
-    flash[:success] += success
-    puts("Flash success right after update_answer_titles_called = " + flash[:success])
-    flash[:error] += error
+    update_answer_titles(params[:answer_titles])
     
     # update answer positions
-    success, error = update_answer_positions(params[:answer_positions])
-    flash[:success] += success
-    flash[:error] += error
+    update_answer_positions(params[:answer_positions])
 
     # update keyword titles
-    success, error = update_keyword_titles(params[:keyword_titles])
-    flash[:success] += success
-    flash[:error] += error
-
+    update_keyword_titles(params[:keyword_titles])
     # update keyword weights
-    success, error = update_keyword_weights(params[:keyword_weights])
-    flash[:success] += success
-    flash[:error] += error
-
+    update_keyword_weights(params[:keyword_weights])
     q.assign_attributes(:question_title => params[:question_title], :position => new_position)
     if(q.changed?)
       if(q.valid?)
@@ -165,7 +141,6 @@ class SurveyController < ApplicationController
       end
     end
     puts("Flash success at end of update_question_button = " + flash[:success])
-    return flash[:success], flash[:error]
   end
   
   # directs button clicks on the edit_question page to their appropriate places
@@ -173,9 +148,7 @@ class SurveyController < ApplicationController
     flash[:success] = ""
     flash[:error] = ""
     if(params[:update_question])
-      success, error = update_question_button(params)
-      flash[:success] = success
-      flash[:error] = error
+      update_question_button(params)
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -184,9 +157,7 @@ class SurveyController < ApplicationController
       end
       redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
     elsif(params[:delete_question])
-      success, error = delete_question_button(params)
-      flash[:success] = success
-      flash[:error] = error
+      delete_question_button(params)
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -195,9 +166,7 @@ class SurveyController < ApplicationController
       end
       redirect_to action: "manage"
     elsif(params[:delete_keyword])
-      success, error = delete_keyword_button(params[:delete_keyword])
-      flash[:success] = success
-      flash[:error] = error
+      delete_keyword_button(params[:delete_keyword])
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -206,9 +175,7 @@ class SurveyController < ApplicationController
       end
       redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
     elsif(params[:add_keyword])
-      success, error = add_keyword_button(params)
-      flash[:success] = success
-      flash[:error] = error
+      add_keyword_button(params)
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -217,9 +184,7 @@ class SurveyController < ApplicationController
       end
       redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
     elsif(params[:add_answer])
-      success, error = add_answer_button(params)
-      flash[:success] = success
-      flash[:error] = error
+      add_answer_button(params)
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -228,9 +193,7 @@ class SurveyController < ApplicationController
       end
       redirect_to controller: 'survey', action: 'edit_question', id: params[:id]
     elsif(params[:delete_answer])
-      success, error = delete_answer_button(params[:delete_answer])
-      flash[:success] = success
-      flash[:error] = error
+      delete_answer_button(params[:delete_answer])
       if(flash[:error] == "")
         flash.delete("error")
       end
@@ -245,8 +208,6 @@ class SurveyController < ApplicationController
   end
 
   def add_answer_button(params)
-    flash[:success] = ""
-    flash[:error] = ""
     @answer = Answer.create(question_id: params[:id], answer_title: params[:new_answer_title], position: params[:new_answer_position])
     if(@answer.valid?)
       @answer.save
@@ -254,7 +215,6 @@ class SurveyController < ApplicationController
     else
       flash[:error] = "Answer not created: " + @answer.errors.full_messages.join(", ")
     end
-    return flash[:success], flash[:error]
   end
 
   def create_question
@@ -319,17 +279,12 @@ class SurveyController < ApplicationController
   end
 
   def add_keyword_button(params)
-    flash[:success] = ""
-    flash[:error] = ""
     answer = Answer.find(params[:add_keyword])
     answer.keywords.create(keyword: params[:new_keyword_title][params[:add_keyword]], weight: params[:new_keyword_weight][params[:add_keyword]])
     flash[:success] = "Keyword added successfully!"
-    return flash[:success], flash[:error]
   end
 
   def delete_question_button(params)
-    flash[:success] = ""
-    flash[:error] = ""
     question = Question.find(params[:id])
     @questionsAfter = Question.where("position >= ?", question.position).order(position: :desc)
     @questionsAfter.each do |q|
@@ -345,12 +300,9 @@ class SurveyController < ApplicationController
     else
       flash[:error] = "Question not deleted successfully: " + question.errors.full_messages.join(", ")
     end
-    return flash[:success], flash[:error]
   end
 
   def delete_answer_button(params)
-    flash[:success] = ""
-    flash[:error] = ""
     answer = Answer.find(params[:id])
     question_id = answer.question_id
     answer.destroy
@@ -359,7 +311,6 @@ class SurveyController < ApplicationController
     else
       flash[:error] = "Answer not deleted: " + answer.erros.full_messages.join(", ")
     end
-    return flash[:success], flash[:error]
   end
 
   def edit_answer
@@ -421,8 +372,6 @@ class SurveyController < ApplicationController
   end
 
   def delete_keyword_button(id)
-    flash[:success] = ""
-    flash[:error] = ""
     keyword = Keyword.find(id)
     keyword.destroy
     if(keyword.destroyed?)
@@ -430,7 +379,6 @@ class SurveyController < ApplicationController
     else
       flash[:error] = "Keyword not deleted: " + keyword.errors.full_messages.join(", ")
     end
-    return flash[:success], flash[:error]
   end
 
   def submit
