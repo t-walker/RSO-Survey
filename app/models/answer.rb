@@ -5,5 +5,5 @@ class Answer < ApplicationRecord
   acts_as_list scope: :question
 
   validates_inclusion_of :position, :in => 1..4
-  has_many :keywords
+  has_many :keywords, :dependent => :destroy
 end

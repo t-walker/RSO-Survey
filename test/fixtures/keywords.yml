@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id:
-  keyword: MyString
+  id: 3
+  keyword: Academic
   weight: 1
 
 two:
-  id:
-  keyword: MyString
+  id: 4
+  keyword: Social
   weight: 2
