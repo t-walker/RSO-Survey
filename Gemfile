@@ -1,4 +1,4 @@
-ruby '2.3.1'
+ruby '2.3.4'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
 source 'https://rubygems.org'
