@@ -10,11 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20171017182439) do
-=======
+
 ActiveRecord::Schema.define(version: 20171018165412) do
->>>>>>> upstream/master
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,11 +90,11 @@ ActiveRecord::Schema.define(version: 20171018165412) do
     t.string   "website"
   end
 
+
   add_foreign_key "officer_rsos", "officers"
   add_foreign_key "officer_rsos", "rsos"
   add_foreign_key "rso_keywords", "keywords", on_delete: :cascade
   add_foreign_key "rso_keywords", "rsos", on_delete: :cascade
-  
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -113,4 +111,5 @@ ActiveRecord::Schema.define(version: 20171018165412) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
+
 end
