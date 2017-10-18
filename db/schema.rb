@@ -38,6 +38,28 @@ ActiveRecord::Schema.define(version: 20171018165412) do
     t.index ["keyword_id", "rso_id"], name: "index_keywords_rsos_on_keyword_id_and_rso_id", using: :btree
   end
 
+  create_table "officer_rsos", force: :cascade do |t|
+    t.integer "officer_id"
+    t.integer "rso_id"
+    t.index ["officer_id"], name: "index_officer_rsos_on_officer_id", using: :btree
+    t.index ["rso_id"], name: "index_officer_rsos_on_rso_id", using: :btree
+  end
+
+  create_table "officers", force: :cascade do |t|
+    t.string   "first"
+    t.string   "last"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "officers_rsos", id: false, force: :cascade do |t|
+    t.integer "officer_id", null: false
+    t.integer "rso_id",     null: false
+    t.index ["officer_id", "rso_id"], name: "index_officers_rsos_on_officer_id_and_rso_id", using: :btree
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string   "question_title"
     t.datetime "created_at",     null: false
@@ -83,6 +105,8 @@ ActiveRecord::Schema.define(version: 20171018165412) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "rso_keywords", "keywords"
-  add_foreign_key "rso_keywords", "rsos"
+  add_foreign_key "officer_rsos", "officers"
+  add_foreign_key "officer_rsos", "rsos"
+  add_foreign_key "rso_keywords", "keywords", on_delete: :cascade
+  add_foreign_key "rso_keywords", "rsos", on_delete: :cascade
 end

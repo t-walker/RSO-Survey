@@ -4,6 +4,7 @@ class RsoController < ApplicationController
 
   def manage
     @rsos = Rso.order(:name)
+    @officers = Officer.order(:last)
   end
 
   def edit
@@ -18,7 +19,7 @@ class RsoController < ApplicationController
     rso = Rso.find(params[:rso_id])
     flash[:success] = ""
     flash[:error] = ""
-    rso.assign_attributes(name: params[:name], nickname: params[:nickname])
+    rso.assign_attributes(name: params[:name], nickname: params[:nickname], website: params[:website], description: params[:description])
     if defined? params["keyword_weights"].keys
       params["keyword_weights"].keys.each do |k_id|
         keyword = Keyword.find(k_id)
