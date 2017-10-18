@@ -8,27 +8,24 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <div class="row">
-                  <%= label_tag "answer_titles[" + a.id.to_s + "]", "Answer: ", class: "col-lg-2 col-form-label", form: "modify_question" %>
+                  <%= label_tag "answer_titles[" + a.id.to_s + "]", "Answer: ", class: "col-lg-2 col-form-label" %>
                   <div class="col-lg-10">
-                    <%= text_field_tag "answer_titles[" + a.id.to_s + "]", a.answer_title, class: "form-control", type: "text", form: "modify_question" %>
+                    <%= text_field_tag "answer_titles[" + a.id.to_s + "]", a.answer_title, class: "form-control", type: "text" %>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row">
-                  <%= label_tag "answer_positions[" + a.id.to_s + "]", "Position: ", class: "col-lg-2 col-form-label", form: "modify_question" %>
+                  <%= label_tag "answer_positions[" + a.id.to_s + "]", "Position: ", class: "col-lg-2 col-form-label" %>
                   <div class="col-lg-10">
-                    <%= text_field_tag "answer_positions[" + a.id.to_s + "]", a.position, class: "form-control", type: "number", form: "modify_question"%>
+                    <%= text_field_tag "answer_positions[" + a.id.to_s + "]", a.position, class: "form-control", type: "number"%>
                   </div>
                 </div>
               </div>
-              <%= form_tag({controller: "survey", action: "delete_answer"}, method: "post", id: "delete_answer") do %>
-                <%= hidden_field_tag(:id, a.id) %>
-              <% end %>
             </div>
           </div>
           <div class="btn-group">
-            <%= button_tag(type: "submit", class: "btn btn-danger pull-right", form: "delete_answer") do %>
+            <%= button_tag 'modify_question', :name => 'delete_answer', :value => a.id, :class => "btn btn-danger" do %>
               <i class="fa fa-trash-o" aria-hidden="true"></i>
               Delete
             <% end %>
@@ -45,15 +42,29 @@
               <% if a.keywords.count > 0 %>
                 <% a.keywords.each do |k| %>
                   <tr>
-                    <%= form_tag({controller: "survey", action: "delete_keyword"}, method: "post", id: "delete_keyword" + k.id.to_s) do %>
-                      <%= hidden_field_tag(:keyword_id, k.id) %>
-                      <%= hidden_field_tag(:question_id, q.id) %>
-                    <% end %>
+                    <%= hidden_field_tag(:keyword_id, k.id) %>
+                    <%= hidden_field_tag(:question_id, q.id) %>
                     <td style="width: 45%"><%= text_field_tag "keyword_titles[" + k.id.to_s + "]", k.keyword, type: "text", class: "form-control", form: "modify_question" %></td>
-                    <td style="width: 45%"><%= text_field_tag "keyword_weights[" + k.id.to_s + "]", k.weight, type: "number", class: "form-control", form: "modify_question" %></td>
+                    <td style="width: 45%">
+                      <div class="btn-group" data-toggle="buttons">
+                        <% (1..5).each do |num| %>
+                          <% if (num == k.weight) %>
+                            <label class="btn btn-primary answer-gradient active">
+                              <%= radio_button_tag "keyword_weights[" + k.id.to_s + "]", num %>
+                              <%= num %>
+                            </label>
+                          <% else %>
+                            <label class="btn btn-primary answer-gradient">
+                              <%= radio_button_tag "keyword_weights[" + k.id.to_s + "]", num %>
+                              <%= num %>
+                            </label>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </td>
                     <td style="width: 10%">
                       <div class="btn-group">
-                        <%= button_tag(type: "submit", class: "btn btn-danger", form: "delete_keyword" + k.id.to_s) do %>
+                        <%= button_tag 'modify_question', :name => 'delete_keyword', :value => k.id, :class => "btn btn-danger" do %>
                           <i class="fa fa-trash-o" aria-hidden="true"></i>
                         <% end %>
                       </div>
@@ -66,66 +77,34 @@
         </div>
         <br />
         <div class="card-footer">
-          <%= form_tag({controller: "survey", action: "add_keyword"}, method: "post") do %>
-            <%= hidden_field_tag(:answer_id, a.id) %>
-            <%= hidden_field_tag(:question_id, q.id) %>
-            <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td style="width: 45%"><%= text_field_tag :keyword, "", class: "form-control" %></td>
-                    <td style="width: 45%"><%= text_field_tag :weight, "", type: "number", class: "form-control" %></td>
-                    <td style="width: 10%">
-                      <%= button_tag(type: "submit", class: "btn btn-block btn-success") do %>
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                      <% end %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          <% end %>
-
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td style="width: 45%"><%= text_field_tag "new_keyword_title[" + a.id.to_s + "]", "", class: "form-control" %></td>
+                  <td style="width: 45%", data-toggle="buttons" class="btn-group">
+                    <% (1..5).each do |num| %>
+                      <label class="btn btn-primary answer-gradient">
+                        <%= radio_button_tag "new_keyword_weight[" + a.id.to_s + "]", num %>
+                        <%= num %>
+                      </label>
+                    <% end %>
+                  </td>
+                  <td style="width: 10%">
+                    <%= button_tag 'modify_question', :name => 'add_keyword', :value => a.id, :class => "btn btn-success" do %>
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
     <% end %>
-    <div class="col-md-6 d-flex align-items-stretch" style="margin-bottom: 20px;">
-      <div class="card">
-        <%= form_tag({controller: "survey", action: "create_answer"}, method: "post", id: "create_answer") do %>
-          <div class="card-header">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="form-group">
-                  
-                  <div class="row">
-                    <%= label_tag "new_answer_title", "Answer: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
-                    <div class="col-lg-10">
-                      <%= text_field_tag "new_answer_title", "", class: "form-control", type: "text", form: "create_answer" %>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="form-group">
-                  <div class="row">
-                    <%= label_tag "new_answer_position", "Position: ", class: "col-lg-2 col-form-label", form: "create_answer" %>
-                    <div class="col-lg-10">
-                      <%= text_field_tag "new_answer_position", "", class: "form-control", type: "number", form: "create_answer"%>
-                    </div>
-                  </div>
-                </div>
-                <%= hidden_field_tag(:q_id, q.id) %>
-              </div>
-            </div>
-            <div class="btn-group">
-              <%= button_tag(type: "submit", class: "btn btn-success pull-right", form: "create_answer") do %>
-                <i class="fa fa-plus" aria-hidden="true"></i>
-
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+    <% if q.answers.count < 4 %>
+      <%= render partial: 'create_answer', :locals => {:q => q} %>
+    <% end %>
   </div>
 </div>
