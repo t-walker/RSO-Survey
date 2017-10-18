@@ -1,6 +1,4 @@
 class RsoController < ApplicationController
-  layout "admin"
-  
   def index
   end
 
