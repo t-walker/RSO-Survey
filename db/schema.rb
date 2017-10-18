@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901222742) do
+ActiveRecord::Schema.define(version: 20171017182439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,6 @@ ActiveRecord::Schema.define(version: 20170901222742) do
     t.string   "website"
   end
 
-  add_foreign_key "rso_keywords", "keywords"
-  add_foreign_key "rso_keywords", "rsos"
+  add_foreign_key "rso_keywords", "keywords", on_delete: :cascade
+  add_foreign_key "rso_keywords", "rsos", on_delete: :cascade
 end
