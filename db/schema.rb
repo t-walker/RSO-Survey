@@ -83,6 +83,6 @@ ActiveRecord::Schema.define(version: 20171018165412) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "rso_keywords", "keywords", on_delete: :cascade
-  add_foreign_key "rso_keywords", "rsos", on_delete: :cascade
+  add_foreign_key "rso_keywords", "keywords"
+  add_foreign_key "rso_keywords", "rsos"
 end
